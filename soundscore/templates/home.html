@@ -3,9 +3,52 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        .map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
 </head>
 <body>
     <h1>Dat home page</h1>
+    <div id='map-one' class='map'> </div><br>
 
+    {% for location in locations %}
+        <h2>Longitude: {{ location.longitude }}</h2>
+        <h2>Latitude: {{ location.latitude }}</h2>
+    {% endfor %}
+
+    <script>
+        L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
+
+        var geojson = [
+          {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [
+                  37.7962173,
+                  -122.4032625
+                ]
+              },
+              "properties": {}
+            }
+          ]
+        }
+
+        ];
+
+        {# map id #}
+        L.mapbox.map('map-one', 'sambrichards.lcknl6d4', {
+            scrollWheelZoom: false
+        }).setView([37.781691, -122.410967], 14);
+
+        var myLayer = L.mapbox.featureLayer().addTo(map);
+        myLayer.setGeoJSON(geojson);
+    </script>
 </body>
 </html>
