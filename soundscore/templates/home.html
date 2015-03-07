@@ -2,8 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>SoundScore | See What You Hear!</title>
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+    <!-- head lib -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.3/leaflet-heat.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
@@ -11,14 +13,14 @@
     </style>
 </head>
 <body>
-    <h1>Dat home page</h1>
-    <div id='map-one' class='map'> </div><br>
-
-    {% for location in locations %}
-        <h2>Longitude: {{ location.longitude }}</h2>
-        <h2>Latitude: {{ location.latitude }}</h2>
-    {% endfor %}
-
+{#    <h1>Dat home page</h1>#}
+    <div id='map' class='map'> </div><br>
+{#    <div>#}
+{#      {% for location in locations %}#}
+{#        <h4>{{ location.latitude }}</h4>#}
+{#        <h4>{{ location.longitude }}</h4>#}
+{#      {% endfor %}#}
+{#    </div>#}
     <script>
         L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
 
@@ -26,29 +28,70 @@
           {
           "type": "FeatureCollection",
           "features": [
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [
-                  37.7962173,
-                  -122.4032625
-                ]
-              },
-              "properties": {}
-            }
+              {% for location in locations %}
+                {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                      {{ location.longitude }},
+                      {{ location.latitude }}
+                    ]
+                  },
+                  "properties": {
+                    "title": "({{ location.latitude }}, {{ location.longitude }})",
+                    "id": {{ location.id }},
+{#                    "marker-color": "#9c89cc",#}
+                    "marker-color": "#000000",
+                    "marker-size": "small",
+{#                    "marker-symbol": "mobilephone"#}
+                  }
+                },
+              {% endfor %}
           ]
         }
-
         ];
 
-        {# map id #}
-        L.mapbox.map('map-one', 'sambrichards.lcknl6d4', {
-            scrollWheelZoom: false
-        }).setView([37.781691, -122.410967], 14);
+        var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {
+            scrollWheelZoom: false,
+            legendControl: {
+                position: 'topright'
+            }
+        });
 
-        var myLayer = L.mapbox.featureLayer().addTo(map);
-        myLayer.setGeoJSON(geojson);
+{#        standard markers#}
+{#        var sensorLayer = L.mapbox.featureLayer().addTo(map);#}
+{#        sensorLayer.setGeoJSON(geojson);#}
+
+
+{#        circle markers #}
+        var sensorLayer = L.geoJson(geojson, {
+            pointToLayer: function(feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: feature.properties.id * 2
+                })
+            }
+        }).addTo(map);
+
+
+{#        heat markers #}
+{#        heat = L.heatLayer([], { maxZoom: 12 }).addTo(map);#}
+{#        sensorLayer.eachLayer(function(l) {#}
+{#            console.log(l);#}
+{#            heat.addLatLng(l.getLatLng());#}
+{#        });#}
+
+        sensorLayer.on('click', function(e) {
+            map.panTo(e.layer.getLatLng());
+        });
+
+        map.legendControl.addLegend('<h2>Sensors of San Francisco</h2>');
+
+        map.fitBounds(sensorLayer.getBounds());
+
+
     </script>
 </body>
 </html>
+
+
