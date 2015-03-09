@@ -23,8 +23,7 @@ class Location(models.Model):
 class Sensor(models.Model):
     source_id = models.CharField(max_length=120, unique=True)
     nickname = models.CharField(max_length=120, blank=True)
-    # todo one to one? many to many? FK?
-    # location = models.ForeignKey(Location, related_name='sensors')
+    # assuming one to one relationship... i.e. sensors don't change locations & never will have multiple sensors at the same location
     location = models.OneToOneField(Location)
 
     def __unicode__(self):
@@ -46,8 +45,15 @@ class Measurement(models.Model):
     def __unicode__(self):
         return u"{} at {}".format(self.sensor, self.timestamp)
 
+    # todo convert db
+
     class Meta:
         unique_together = ('timestamp', 'sensor',)
+
+    # dB = 0.0158x + 49.184
+    def get_decibels(self):
+        return self.sound * 0.0158 + 49.184
+
 
 
 class Url(models.Model):

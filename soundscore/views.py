@@ -26,9 +26,9 @@ class MeasurementList(generics.ListAPIView):
     # call to queryset is blowing up your shit
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
-    paginate_by = 10
+    paginate_by = 100
     paginate_by_param = 'count'
-    max_paginate_by = 100
+    max_paginate_by = 1000
 
 # serializer details views
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
