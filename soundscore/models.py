@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 from django.db import models
 
 class Location(models.Model):
@@ -45,15 +46,12 @@ class Measurement(models.Model):
     def __unicode__(self):
         return u"{} at {}".format(self.sensor, self.timestamp)
 
-    # todo convert db
-
     class Meta:
         unique_together = ('timestamp', 'sensor',)
 
-    # dB = 0.0158x + 49.184
-    def get_decibels(self):
+    @property
+    def decibels(self):
         return self.sound * 0.0158 + 49.184
-
 
 
 class Url(models.Model):
@@ -65,3 +63,98 @@ class Url(models.Model):
 
     def __unicode__(self):
         return u"{}".format(self.url)
+
+
+# todo classes for time series aggregations... averages by month / week / day / hour
+
+# class MonthAvg(models.Model):
+#     timestamp = models.DateTimeField()
+#     air_quality = models.CharField(max_length=100)
+#     air_quality_raw = models.IntegerField()
+#     dust = models.IntegerField()
+#     humidity = models.IntegerField()
+#     light = models.IntegerField()
+#     sound = models.IntegerField()
+#     temperature = models.IntegerField()
+#     uv = models.IntegerField()
+#     sensor = models.ForeignKey(Sensor, related_name='measurements')
+#
+#     def __unicode__(self):
+#         return u"{} at {}".format(self.sensor, self.timestamp)
+#
+#     class Meta:
+#         unique_together = ('timestamp', 'sensor',)
+#
+#     # dB = 0.0158x + 49.184
+#     def get_decibels(self):
+#         return self.sound * 0.0158 + 49.184
+#
+# class WeekAvg(models.Model):
+#     timestamp = models.DateTimeField()
+#     air_quality = models.CharField(max_length=100)
+#     air_quality_raw = models.IntegerField()
+#     dust = models.IntegerField()
+#     humidity = models.IntegerField()
+#     light = models.IntegerField()
+#     sound = models.IntegerField()
+#     temperature = models.IntegerField()
+#     uv = models.IntegerField()
+#     sensor = models.ForeignKey(Sensor, related_name='measurements')
+#
+#     def __unicode__(self):
+#         return u"{} at {}".format(self.sensor, self.timestamp)
+#
+#     class Meta:
+#         unique_together = ('timestamp', 'sensor',)
+#
+#     # dB = 0.0158x + 49.184
+#     def get_decibels(self):
+#         return self.sound * 0.0158 + 49.184
+#
+# class DayAvg(models.Model):
+#     timestamp = models.DateTimeField()
+#     air_quality = models.CharField(max_length=100)
+#     air_quality_raw = models.IntegerField()
+#     dust = models.IntegerField()
+#     humidity = models.IntegerField()
+#     light = models.IntegerField()
+#     sound = models.IntegerField()
+#     temperature = models.IntegerField()
+#     uv = models.IntegerField()
+#     sensor = models.ForeignKey(Sensor, related_name='measurements')
+#
+#     def __unicode__(self):
+#         return u"{} at {}".format(self.sensor, self.timestamp)
+#
+#     class Meta:
+#         unique_together = ('timestamp', 'sensor',)
+#
+#     # dB = 0.0158x + 49.184
+#     def get_decibels(self):
+#         return self.sound * 0.0158 + 49.184
+#
+#     # todo get day of week
+#
+# class HourAvg(models.Model):
+#     timestamp = models.DateTimeField()
+#     air_quality = models.CharField(max_length=100)
+#     air_quality_raw = models.IntegerField()
+#     dust = models.IntegerField()
+#     humidity = models.IntegerField()
+#     light = models.IntegerField()
+#     sound = models.IntegerField()
+#     temperature = models.IntegerField()
+#     uv = models.IntegerField()
+#     sensor = models.ForeignKey(Sensor, related_name='measurements')
+#
+#     def __unicode__(self):
+#         return u"{} at {}".format(self.sensor, self.timestamp)
+#
+#     class Meta:
+#         unique_together = ('timestamp', 'sensor',)
+#
+#     # dB = 0.0158x + 49.184
+#     def get_decibels(self):
+#         return self.sound * 0.0158 + 49.184
+#
+#     # todo get hour of day

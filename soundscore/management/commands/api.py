@@ -5,6 +5,22 @@ from datetime import datetime
 from soundscore.models import Location, Sensor, Measurement, Url
 from django.core.management.base import BaseCommand, CommandError
 
+boston_sensors = [
+            "ci4x0rtb9000h02tcfa5qov33",
+            "ci4ooqbyw0001021o7p4qiedw",
+            "ci4xird28000003zzz1soh9fj",
+            "ci4ue1845000102w7ni64j7pl",
+            "ci4w1npi3000p02s7a43zws7q",
+            "ci4vzm23c000o02s76ezwdgxe",
+            "ci4x1uh3q000j02tcnehaazvw",
+            "ci5a6lluy000303z5d02xla24",
+            "ci530o426000003v9a6uxvc2l",
+            "ci4rb6392000102wddchkqctq",
+            "ci4qaiat7000002wdidwagmmb",
+            "ci4vv79v9000k02s7n4avp69i",
+            "ci4w3emre000002tcnpko08o3"
+        ]
+
 sf_sensors = [
             "ci4yfbbdb000d03zzoq8kjdl0",
             "ci4yhy9yy000f03zznho5nm7c",

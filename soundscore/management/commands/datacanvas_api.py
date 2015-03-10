@@ -5,22 +5,6 @@ from datetime import datetime
 from soundscore.models import Location, Sensor, Measurement, Url
 from django.core.management.base import BaseCommand, CommandError
 
-boston_sensors = [
-            "ci4x0rtb9000h02tcfa5qov33",
-            "ci4ooqbyw0001021o7p4qiedw",
-            "ci4xird28000003zzz1soh9fj",
-            "ci4ue1845000102w7ni64j7pl",
-            "ci4w1npi3000p02s7a43zws7q",
-            "ci4vzm23c000o02s76ezwdgxe",
-            "ci4x1uh3q000j02tcnehaazvw",
-            "ci5a6lluy000303z5d02xla24",
-            "ci530o426000003v9a6uxvc2l",
-            "ci4rb6392000102wddchkqctq",
-            "ci4qaiat7000002wdidwagmmb",
-            "ci4vv79v9000k02s7n4avp69i",
-            "ci4w3emre000002tcnpko08o3"
-        ]
-
 sf_sensors = [
             "ci4yfbbdb000d03zzoq8kjdl0",
             "ci4yhy9yy000f03zznho5nm7c",
@@ -40,49 +24,27 @@ sf_sensors = [
 
 class Command(BaseCommand):
     # args = sf_sensors
-    help = 'some message'
+    # help = 'some message'
 
     def handle(self, *args, **options):
         # loop through sensors
-        measurements = 0
-
         for i in sf_sensors:
             count = 0
             print "Grabbing data for sensor " + i
             # last url : http://localdata-sensors.herokuapp.com/api/v1/sources/ci4ut5zu5000402s7g6nihdn0/entries?before=2015-01-15T16:38:20.000Z&count=1000&sort=desc
-            url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?count=1000&sort=desc"
+            # url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?count=1000&sort=desc"
             # url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?before=2015-03-01T08:09:53.000Z&count=1000&sort=desc"
             # url = "http://localdata-sensors.herokuapp.com/api/v1/sources/" + i + "/entries?before=2015-03-01T00:00:01.000Z&count=1000&sort=desc"
+            url = "http://localdata-sensors.herokuapp.com/api/v1/sources/" + i + "/entries?after=2015-02-01T00:00:00.000Z&count=1000&sort=asc"
             while True:
-                measurements += 1000
                 count += 1
-                # print "Now at " + str(count) + " URL requests and " + str(measurements) + " measurements stored"
-                print "Now at " + str(count) + " URL requests for sensor" + i
+                print "Now at " + str(count) + " URL requests for sensor " + i
                 url = self.get_data(url)
                 if (url == False):
                     break
 
-    # convert to python timestamp
-    # https://docs.python.org/2/library/datetime.html#datetime.datetime
-    # class datetime.datetime(year, month, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]])
-    # suman -- better way to do this: https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior
     @staticmethod
-    def get_time(timestamp):
-        return datetime(
-        year = int(timestamp[0:4]),
-        month = int(timestamp[5:7]),
-        day = int(timestamp[8:10]),
-        hour = int(timestamp[11:13]),
-        minute = int(timestamp[14:16]),
-        second = int(timestamp[17:19]),
-        microsecond = int(timestamp[20:23]),
-        # todo confirm proper tzinfo format
-        # tzinfo = timestamp[24]
-        tzinfo = None
-        )
-
-    # @staticmethod
-    def get_data(self, url_request):
+    def get_data(url_request):
         r = requests.get(url_request)
 
         # check response code
@@ -96,19 +58,19 @@ class Command(BaseCommand):
             print "The return data is not JSON"
             return False
 
-        # check for data
+        # confirm there's data
         if (len(r.json()['data']) == 0):
             print "No more data."
             return False
 
-        # only grab data after jan
-        # todo update this so we're grabbing data from last used URL
-        if (int(r.json()['data'][0]['timestamp'][5:7]) < 3):
-            return False
-
         else:
             for i in r.json()['data']:
-                ts = self.get_time(i['timestamp'])
+                ts = datetime.strptime(i['timestamp'], '%Y-%m-%dT%H:%M:%S.%fZ')
+
+                # restrict date range
+                if (ts > datetime.strptime('2015-03-01', '%Y-%m-%d')):
+                    print 'Out of time range.'
+                    return False
 
                 # check for faulty location (sensor pk = 12)
                 if (i['data']['location'][0] == 37.7648):
@@ -163,3 +125,4 @@ class Command(BaseCommand):
                 return False
             else:
                 return r.json()['links']['next']
+                # return r.json()['links']['prev']

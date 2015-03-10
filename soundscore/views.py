@@ -11,7 +11,6 @@ def home(request):
     locations = Location.objects.all()
     return render(request, 'home.html', {'locations': locations})
 
-
 # serializer list views
 class LocationList(generics.ListAPIView):
     queryset = Location.objects.all()
@@ -21,9 +20,8 @@ class SensorList(generics.ListAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
-# todo clean this up somehow
+# todo may want clean this up somehow by limiting queryset grab
 class MeasurementList(generics.ListAPIView):
-    # call to queryset is blowing up your shit
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
     paginate_by = 100
