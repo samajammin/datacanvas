@@ -65,96 +65,39 @@ class Url(models.Model):
         return u"{}".format(self.url)
 
 
-# todo classes for time series aggregations... averages by month / week / day / hour
+# todo should convert all to decibels BEFORE...
 
-# class MonthAvg(models.Model):
-#     timestamp = models.DateTimeField()
-#     air_quality = models.CharField(max_length=100)
-#     air_quality_raw = models.IntegerField()
-#     dust = models.IntegerField()
-#     humidity = models.IntegerField()
-#     light = models.IntegerField()
-#     sound = models.IntegerField()
-#     temperature = models.IntegerField()
-#     uv = models.IntegerField()
-#     sensor = models.ForeignKey(Sensor, related_name='measurements')
+class HourlySound(models.Model):
+    hour = models.DateTimeField()
+    sound_avg = models.FloatField()
+    sound_min = models.FloatField()
+    sound_max = models.FloatField()
+    sound_std = models.FloatField()
+    sound_var = models.FloatField()
+    sound_count = models.IntegerField()
+    sensor = models.ForeignKey(Sensor, related_name='hours')
+
+    def __unicode__(self):
+        return u"{} sound aggregated at {}".format(self.sensor, self.hour)
+
+    class Meta:
+        unique_together = ('hour', 'sensor',)
+
+# class DailySound(models.Model):
+#     date = models.DateField()
+#     sound_avg = models.FloatField()
+#     sound_min = models.FloatField()
+#     sound_max = models.FloatField()
+#     sound_std = models.FloatField()
+#     sound_var = models.FloatField()
+#     sound_count = models.IntegerField()
+#     sensor = models.ForeignKey(Sensor, related_name='hours')
 #
 #     def __unicode__(self):
-#         return u"{} at {}".format(self.sensor, self.timestamp)
+#         return u"{} at {}".format(self.sensor, self.date)
 #
 #     class Meta:
-#         unique_together = ('timestamp', 'sensor',)
+#         unique_together = ('date', 'sensor',)
 #
-#     # dB = 0.0158x + 49.184
-#     def get_decibels(self):
-#         return self.sound * 0.0158 + 49.184
-#
-# class WeekAvg(models.Model):
-#     timestamp = models.DateTimeField()
-#     air_quality = models.CharField(max_length=100)
-#     air_quality_raw = models.IntegerField()
-#     dust = models.IntegerField()
-#     humidity = models.IntegerField()
-#     light = models.IntegerField()
-#     sound = models.IntegerField()
-#     temperature = models.IntegerField()
-#     uv = models.IntegerField()
-#     sensor = models.ForeignKey(Sensor, related_name='measurements')
-#
-#     def __unicode__(self):
-#         return u"{} at {}".format(self.sensor, self.timestamp)
-#
-#     class Meta:
-#         unique_together = ('timestamp', 'sensor',)
-#
-#     # dB = 0.0158x + 49.184
-#     def get_decibels(self):
-#         return self.sound * 0.0158 + 49.184
-#
-# class DayAvg(models.Model):
-#     timestamp = models.DateTimeField()
-#     air_quality = models.CharField(max_length=100)
-#     air_quality_raw = models.IntegerField()
-#     dust = models.IntegerField()
-#     humidity = models.IntegerField()
-#     light = models.IntegerField()
-#     sound = models.IntegerField()
-#     temperature = models.IntegerField()
-#     uv = models.IntegerField()
-#     sensor = models.ForeignKey(Sensor, related_name='measurements')
-#
-#     def __unicode__(self):
-#         return u"{} at {}".format(self.sensor, self.timestamp)
-#
-#     class Meta:
-#         unique_together = ('timestamp', 'sensor',)
-#
-#     # dB = 0.0158x + 49.184
-#     def get_decibels(self):
-#         return self.sound * 0.0158 + 49.184
-#
-#     # todo get day of week
-#
-# class HourAvg(models.Model):
-#     timestamp = models.DateTimeField()
-#     air_quality = models.CharField(max_length=100)
-#     air_quality_raw = models.IntegerField()
-#     dust = models.IntegerField()
-#     humidity = models.IntegerField()
-#     light = models.IntegerField()
-#     sound = models.IntegerField()
-#     temperature = models.IntegerField()
-#     uv = models.IntegerField()
-#     sensor = models.ForeignKey(Sensor, related_name='measurements')
-#
-#     def __unicode__(self):
-#         return u"{} at {}".format(self.sensor, self.timestamp)
-#
-#     class Meta:
-#         unique_together = ('timestamp', 'sensor',)
-#
-#     # dB = 0.0158x + 49.184
-#     def get_decibels(self):
-#         return self.sound * 0.0158 + 49.184
-#
-#     # todo get hour of day
+# #     todo get DOW
+

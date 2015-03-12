@@ -17,5 +17,9 @@ class SensorSerializer(serializers.ModelSerializer):
 class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
-        # todo how to feed decibel calculations?
+        fields = ('id', 'timestamp', 'sensor', 'sound', 'decibels')
+
+class MonthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Measurement
         fields = ('id', 'timestamp', 'sensor', 'sound', 'decibels')

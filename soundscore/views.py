@@ -26,7 +26,17 @@ class MeasurementList(generics.ListAPIView):
     serializer_class = MeasurementSerializer
     paginate_by = 100
     paginate_by_param = 'count'
-    max_paginate_by = 1000
+    max_paginate_by = 1000000
+
+
+class MonthList(generics.ListAPIView):
+    queryset = Measurement.objects.filter(timestamp=)
+    serializer_class = MonthSerializer
+    paginate_by = 100
+    paginate_by_param = 'count'
+    max_paginate_by = 1000000
+
+
 
 # serializer details views
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
