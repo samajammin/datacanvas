@@ -5,12 +5,6 @@ from soundscore.serializers import LocationSerializer, SensorSerializer, Measure
 
 __author__ = 'samrichards'
 
-from django.shortcuts import render
-
-def home(request):
-    locations = Location.objects.all()
-    return render(request, 'home.html', {'locations': locations})
-
 # serializer list views
 class LocationList(generics.ListAPIView):
     queryset = Location.objects.all()

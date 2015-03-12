@@ -1,5 +1,5 @@
 __author__ = 'samrichards'
-from soundscore.models import Location, Sensor, Measurement
+from soundscore.models import Location, Sensor, Measurement, HourlySound
 from rest_framework import serializers
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -19,7 +19,8 @@ class MeasurementSerializer(serializers.ModelSerializer):
         model = Measurement
         fields = ('id', 'timestamp', 'sensor', 'sound', 'decibels')
 
-class MonthSerializer(serializers.ModelSerializer):
+
+class HourSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Measurement
-        fields = ('id', 'timestamp', 'sensor', 'sound', 'decibels')
+        model = HourlySound
+        # fields = ('id', 'hour', 'sound_avg', 'sound_count', 'sensor')

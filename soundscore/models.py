@@ -65,8 +65,6 @@ class Url(models.Model):
         return u"{}".format(self.url)
 
 
-# todo should convert all to decibels BEFORE...
-
 class HourlySound(models.Model):
     hour = models.DateTimeField()
     sound_avg = models.FloatField()
