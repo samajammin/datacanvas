@@ -63,6 +63,12 @@ angular.module('soundscoreangularApp')
     });
     //    pull in locations
 
+    //
+    //$http.get("http://localhost:8000/api/hours/").success(function(data, status) {
+    //
+    //    });
+
+
     $http.get("http://localhost:8000/api/locations/").success(function(data, status) {
         console.log(data);
         //var myIcon = {  iconUrl:'images/mapPinRed.png',
