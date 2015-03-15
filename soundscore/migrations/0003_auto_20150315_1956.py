@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('soundscore', '0003_auto_20150311_2252'),
+        ('soundscore', '0002_auto_20150304_2341'),
     ]
 
     operations = [
@@ -27,28 +27,6 @@ class Migration(migrations.Migration):
             options={
             },
             bases=(models.Model,),
-        ),
-        migrations.AlterUniqueTogether(
-            name='dayavg',
-            unique_together=None,
-        ),
-        migrations.RemoveField(
-            model_name='dayavg',
-            name='sensor',
-        ),
-        migrations.DeleteModel(
-            name='DayAvg',
-        ),
-        migrations.AlterUniqueTogether(
-            name='houravg',
-            unique_together=None,
-        ),
-        migrations.RemoveField(
-            model_name='houravg',
-            name='sensor',
-        ),
-        migrations.DeleteModel(
-            name='HourAvg',
         ),
         migrations.AlterUniqueTogether(
             name='hourlysound',
