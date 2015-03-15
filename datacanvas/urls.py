@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^api/', include(router.urls)),
     url(r'^$', 'soundscore.views.home', name='home'),
+    url(r'^index/$', 'soundscore.views.index', name='index'),
     # url(r'^blog/', include('blog.urls')),
 
     # todo split up api urls & views if things get unwieldy
@@ -28,6 +29,7 @@ urlpatterns = patterns('',
     # aggregation views
     url(r'^api/hours/$', views.HourList.as_view()),
     url(r'^api/hours/(?P<hour>[0-2]?[0-9])/$', views.HourDetailList.as_view()),
+    url(r'^api/hours/sensor/(?P<sensor_id>[0-9]+)/$', views.HourSensorDetailList.as_view()),
     # url(r'^api/hours/id/(?P<pk>[0-9]+)/$', views.HourDetail.as_view()),
 
     # 1 = Sunday

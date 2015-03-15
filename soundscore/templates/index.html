@@ -14,13 +14,13 @@
     <title>SoundScore | See what you hear</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="static/css/stylish-portfolio.css" rel="stylesheet">
+    <link href="../static/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,10 +35,10 @@
     <!-- head lib -->
     <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.3/leaflet-heat.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
-    <style>
-        body { margin:0; padding:0; }
-        .map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
+{#    <style>#}
+{#        body { margin:0; padding:0; }#}
+{#        .map { position:absolute; top:0; bottom:0; width:100%; }#}
+{#    </style>#}
 </head>
 
 <body>
@@ -79,18 +79,18 @@
         </div>
     </header>
 
-    <!-- Map -->
-    <section id="map" class="map">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div id='map' class='map'> </div><br>
-                </div>
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>    
+{#    <!-- Map -->#}
+{#    <section id="map" class="map">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-lg-12 text-center">#}
+{#                    <div id='map' class='map'> </div><br>#}
+{#                </div>#}
+{#            </div>#}
+{#            <!-- /.row -->#}
+{#        </div>#}
+{#        <!-- /.container -->#}
+{#    </section>    #}
     
     
     <!-- About -->
@@ -196,28 +196,28 @@
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="img/portfolio-1.jpg">
+                                    <img class="img-portfolio img-responsive" src="../static/img/portfolio-1.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="img/portfolio-2.jpg">
+                                    <img class="img-portfolio img-responsive" src="../static/img/portfolio-2.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="img/portfolio-3.jpg">
+                                    <img class="img-portfolio img-responsive" src="../static/img/portfolio-3.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="img/portfolio-4.jpg">
+                                    <img class="img-portfolio img-responsive" src="../static/img/portfolio-4.jpg">
                                 </a>
                             </div>
                         </div>
@@ -247,7 +247,8 @@
 
     <!-- Map -->
     <section id="contact" class="map">
-        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed">
+        </iframe>
         <br />
         <small>
             <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
@@ -288,10 +289,10 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="../static/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script>
@@ -324,74 +325,75 @@
         });
     });
     </script>
-    <script>
-    L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
 
-    var geojson = [
-      {
-      "type": "FeatureCollection",
-      "features": [
-          {% for location in locations %}
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [
-                  {{ location.longitude }},
-                  {{ location.latitude }}
-                ]
-              },
-              "properties": {
-                "title": "({{ location.latitude }}, {{ location.longitude }})",
-                "id": {{ location.id }},
+{#    <script>#}
+{#    L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';#}
+{##}
+{#    var geojson = [#}
+{#      {#}
+{#      "type": "FeatureCollection",#}
+{#      "features": [#}
+{#          {% for location in locations %}#}
+{#            {#}
+{#              "type": "Feature",#}
+{#              "geometry": {#}
+{#                "type": "Point",#}
+{#                "coordinates": [#}
+{#                  {{ location.longitude }},#}
+{#                  {{ location.latitude }}#}
+{#                ]#}
+{#              },#}
+{#              "properties": {#}
+{#                "title": "({{ location.latitude }}, {{ location.longitude }})",#}
+{#                "id": {{ location.id }},#}
 {#                    "marker-color": "#9c89cc",#}
-                "marker-color": "#000000",
-                "marker-size": "small",
+{#                "marker-color": "#000000",#}
+{#                "marker-size": "small",#}
 {#                    "marker-symbol": "mobilephone"#}
-              }
-            },
-          {% endfor %}
-      ]
-    }
-    ];
-
-    var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {
-        scrollWheelZoom: false,
-        legendControl: {
-            position: 'topright'
-        }
-    });
-
+{#              }#}
+{#            },#}
+{#          {% endfor %}#}
+{#      ]#}
+{#    }#}
+{#    ];#}
+{##}
+{#    var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {#}
+{#        scrollWheelZoom: false,#}
+{#        legendControl: {#}
+{#            position: 'topright'#}
+{#        }#}
+{#    });#}
+{##}
 {#        standard markers#}
 {#        var sensorLayer = L.mapbox.featureLayer().addTo(map);#}
 {#        sensorLayer.setGeoJSON(geojson);#}
-
-
+{##}
+{##}
 {#        circle markers #}
-    var sensorLayer = L.geoJson(geojson, {
-        pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: feature.properties.id * 2
-            })
-        }
-    }).addTo(map);
-
-
+{#    var sensorLayer = L.geoJson(geojson, {#}
+{#        pointToLayer: function(feature, latlng) {#}
+{#            return L.circleMarker(latlng, {#}
+{#                radius: feature.properties.id * 2#}
+{#            })#}
+{#        }#}
+{#    }).addTo(map);#}
+{##}
+{##}
 {#        heat markers #}
 {#        heat = L.heatLayer([], { maxZoom: 12 }).addTo(map);#}
 {#        sensorLayer.eachLayer(function(l) {#}
 {#            console.log(l);#}
 {#            heat.addLatLng(l.getLatLng());#}
 {#        });#}
-
-    sensorLayer.on('click', function(e) {
-        map.panTo(e.layer.getLatLng());
-    });
-
-    map.legendControl.addLegend('<h2>Sensors of San Francisco</h2>');
-
-    map.fitBounds(sensorLayer.getBounds());
-    </script>
+{##}
+{#    sensorLayer.on('click', function(e) {#}
+{#        map.panTo(e.layer.getLatLng());#}
+{#    });#}
+{##}
+{#    map.legendControl.addLegend('<h2>Sensors of San Francisco</h2>');#}
+{##}
+{#    map.fitBounds(sensorLayer.getBounds());#}
+{#    </script>#}
 </body>
 
 </html>

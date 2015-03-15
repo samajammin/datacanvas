@@ -11,6 +11,10 @@ def home(request):
     locations = Location.objects.all()
     return render(request, 'home.html', {'locations': locations})
 
+def index(request):
+    locations = Location.objects.all()
+    return render(request, 'index.html', {'locations': locations})
+
 # api views
 
 # list views
@@ -38,6 +42,17 @@ class HourList(generics.ListAPIView):
     max_paginate_by = 1000000
 
 # detail list views
+class HourSensorDetailList(generics.ListAPIView):
+    serializer_class = HourSerializer
+    queryset = HourlySound.objects.all()
+    paginate_by = 100
+    paginate_by_param = 'count'
+    max_paginate_by = 1000000
+
+    def get_queryset(self):
+        sensor_id = self.kwargs['sensor_id']
+        return HourlySound.objects.filter(sensor=sensor_id)
+
 class HourDetailList(generics.ListAPIView):
     serializer_class = HourSerializer
     queryset = HourlySound.objects.all()
