@@ -9,7 +9,6 @@ from django.db.models import Avg, Min, Max, StdDev, Count, Variance
 class Command(BaseCommand):
     # args = sf_sensors
     # help = 'some message'
-    # todo rerun hours for sensor pk=14... pull for jan 1st? nah...
     def handle(self, *args, **options):
         sensors = Sensor.objects.all()
         for sensor in sensors:
