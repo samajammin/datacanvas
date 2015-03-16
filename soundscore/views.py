@@ -15,7 +15,13 @@ def dcjs(request):
     locations = Location.objects.all()
     return render(request, 'dcjs.html', {'locations': locations})
 
+def index(request):
+    locations = Location.objects.all()
+    return render(request, 'index.html', {'locations': locations})
+
 # api views
+
+# todo think we want location query to hit sound averages by location
 
 # list views
 class LocationList(generics.ListAPIView):

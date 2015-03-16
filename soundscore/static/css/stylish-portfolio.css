@@ -155,11 +155,30 @@ hr.small {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url(../img/bg.jpg) no-repeat center center scroll;
+    background: url(../img/sf-skyline.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    color: white;
+}
+
+/* Map */
+
+.map {
+    padding: 50px 0;
+    height: 100%;
+    /*margin:0;*/
+    /*position:relative; */
+    /*top: 0; */
+    /*bottom: 0; */
+    /*width:100%;*/
+}
+
+/* Charts */
+
+.charts {
+    padding: 50px 0;
 }
 
 /* About */
@@ -222,12 +241,12 @@ hr.small {
 
 /* Map */
 
-.map {
+.googlemap {
     height: 500px;
 }
 
 @media(max-width:768px) {
-    .map {
+    .googlemap {
         height: 75%;
     }
 }

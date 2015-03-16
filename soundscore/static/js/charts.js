@@ -11,7 +11,7 @@ var hoursChart  = dc.compositeChart("#chart-line-soundperhour");
 //var hoursBarChart  = dc.barChart("#chart-bar-soundperhour");
 
 //        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
-d3.json("../static/js/updatedhours.json", function(data){
+d3.json("../static/js/newhours.json", function(data){
     var api_data = data['results'];
 //            console.log(api_data.length);
 //            console.log(api_data);
