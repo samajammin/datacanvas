@@ -11,9 +11,9 @@ def home(request):
     locations = Location.objects.all()
     return render(request, 'home.html', {'locations': locations})
 
-def index(request):
+def dcjs(request):
     locations = Location.objects.all()
-    return render(request, 'index.html', {'locations': locations})
+    return render(request, 'dcjs.html', {'locations': locations})
 
 # api views
 
