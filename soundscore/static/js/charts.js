@@ -84,6 +84,7 @@ d3.json("../static/js/newhours.json", function(data){
 
 
 
+
     var parseHour = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
     api_data.forEach(function(d) {
         d.hour = parseHour(d.hour);
@@ -92,6 +93,13 @@ d3.json("../static/js/newhours.json", function(data){
         d.dow = d.hour.getDay();
         d.date = d3.time.day(d.hour);
     });
+
+    var feb = "2015-02-14T00:23:50"
+    var february = parseHour(feb);
+    console.log(feb);
+    console.log(february);
+    console.log(d3.time.month(february));
+
     var hourDim = cf.dimension(function(d) { return d.hour;});
     var monthDim  = cf.dimension(function(d) {return d.month;});
     var dowDim  = cf.dimension(function(d) {return d.dow;});
@@ -158,8 +166,7 @@ d3.json("../static/js/newhours.json", function(data){
 
 
     dowChart
-          .width(200)
-          .height(300)
+          .width(300).height(300)
           .margins({top: 10, left: 20, right: 10, bottom: 20})
 //              .group(dowDim.group())
           .group(dowTotal)
@@ -204,7 +211,7 @@ d3.json("../static/js/newhours.json", function(data){
     /* dc.barChart('#volume-month-chart') */
     hodChart
         .width(300)
-        .height(180)
+        .height(300)
         .margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(hodDim)
         .group(hodTotal)
@@ -216,6 +223,23 @@ d3.json("../static/js/newhours.json", function(data){
         .alwaysUseRounding(true)
         .x(d3.scale.linear().domain([0, 23]))
         .renderHorizontalGridLines(true);
+
+    dateBarChart
+        .width(1000).height(500)
+        //.margins({top: 10, right: 50, bottom: 30, left: 40})
+        .dimension(dateDim)
+        .group(dateTotal)
+        .round(dc.round.floor)
+        .alwaysUseRounding(true)
+        .brushOn(true)
+        .x(d3.time.scale().domain([minDate,maxDate]))
+        //.filter([d3.time.month(parseHour("2015-02-14T00:23:50")),d3.time.month(parseHour("2015-03-14T00:23:50"))])
+        .legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
+        .elasticY(true)
+        .gap(3)
+        .yAxisLabel("Decibels");
+
+
         // customize the filter displayed in the control span
         //.filterPrinter(function (filters) {
         //    var filter = filters[0], s = '';
@@ -227,22 +251,6 @@ d3.json("../static/js/newhours.json", function(data){
     //fluctuationChart.xAxis().tickFormat(
     //    function (v) { return v + '%'; });
     //fluctuationChart.yAxis().ticks(5);
-
-
-    dateBarChart
-        .width(1000).height(500)
-        //.margins({top: 10, right: 50, bottom: 30, left: 40})
-        .dimension(dateDim)
-        .group(dateTotal)
-        .round(dc.round.floor)
-        .alwaysUseRounding(true)
-        .brushOn(true)
-        .x(d3.time.scale().domain([minDate,maxDate]))
-        .legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
-        .elasticY(true)
-        .gap(3)
-        .yAxisLabel("Decibels")
-        .xAxisLabel("Date");
 
     dateBarChart.xUnits(function(){return 50;});
 
