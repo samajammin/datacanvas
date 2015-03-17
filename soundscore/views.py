@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from rest_framework import viewsets
 from rest_framework import generics
 from soundscore.models import Location, Sensor, Measurement, HourlySound
@@ -27,6 +28,7 @@ def index(request):
 class LocationList(generics.ListAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
 
 class SensorList(generics.ListAPIView):
     queryset = Sensor.objects.all()

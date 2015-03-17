@@ -5,7 +5,7 @@ from rest_framework import serializers
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        # fields = ('id', 'longitude', 'latitude')
+        fields = ('id', 'longitude', 'latitude', 'sensor', 'avg_sound', 'avg_var', 'avg_std', 'sound_count')
 
 
 class SensorSerializer(serializers.ModelSerializer):

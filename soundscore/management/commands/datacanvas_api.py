@@ -6,7 +6,7 @@ from soundscore.models import Location, Sensor, Measurement, Url
 from django.core.management.base import BaseCommand, CommandError
 
 sf_sensors = [
-            "ci4yfbbdb000d03zzoq8kjdl0"
+            # "ci4yfbbdb000d03zzoq8kjdl0",
             # "ci4yhy9yy000f03zznho5nm7c",
             # "ci4yyrdqi000j03zz8ylornqd",
             # "ci4vy1tfy000m02s7v29jkkx4",
@@ -14,10 +14,10 @@ sf_sensors = [
             # "ci4usvy81000302s7whpk8qlp", # not sure why but got an IntegrityError: duplicate key value violates unique constraint "soundscore_sensor_source_id_key" DETAIL:  Key (source_id)=(ci4usvy81000302s7whpk8qlp) already exists. out of the blue
             # "ci4usvryz000202s7llxjafaf", # last request: http://localdata-sensors.herokuapp.com/api/v1/sources/ci4usvryz000202s7llxjafaf/entries?before=2015-02-08T23:51:31.000Z&count=1000&sort=desc
             # "ci4xcxxgc000n02tci92gpvi6",
-            # "ci4usss1t000102s7hkg0rpqg",
-            # "ci4tmxpz8000002w7au38un50",
-            # "ci4yf50s5000c03zzt4h2tnsq",
-            # "ci4ut5zu5000402s7g6nihdn0"
+            "ci4usss1t000102s7hkg0rpqg",
+            "ci4tmxpz8000002w7au38un50",
+            "ci4yf50s5000c03zzt4h2tnsq",
+            "ci4ut5zu5000402s7g6nihdn0"
         ]
 
 # todo... should return URL on integrity errors for debugging purposes
@@ -32,10 +32,10 @@ class Command(BaseCommand):
             count = 0
             print "Grabbing data for sensor " + i
             # last url : http://localdata-sensors.herokuapp.com/api/v1/sources/ci4ut5zu5000402s7g6nihdn0/entries?before=2015-01-15T16:38:20.000Z&count=1000&sort=desc
-            # url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?count=1000&sort=desc"
+            url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?count=1000&sort=desc"
             # url = "http://sensor-api.localdata.com/api/v1/sources/" + i + "/entries?before=2015-03-01T08:09:53.000Z&count=1000&sort=desc"
             # url = "http://localdata-sensors.herokuapp.com/api/v1/sources/" + i + "/entries?before=2015-03-01T00:00:01.000Z&count=1000&sort=desc"
-            url = "http://localdata-sensors.herokuapp.com/api/v1/sources/" + i + "/entries?after=2015-01-01T00:00:00.000Z&count=1000&sort=asc"
+            # url = "http://localdata-sensors.herokuapp.com/api/v1/sources/" + i + "/entries?after=2015-01-01T00:00:00.000Z&count=1000&sort=asc"
             while True:
                 count += 1
                 print "Now at " + str(count) + " URL requests for sensor " + i
@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 ts = datetime.strptime(i['timestamp'], '%Y-%m-%dT%H:%M:%S.%fZ')
 
                 # restrict date range
-                if (ts > datetime.strptime('2015-02-01', '%Y-%m-%d')):
+                if (ts < datetime.strptime('2015-03-01', '%Y-%m-%d')):
                     print 'Out of time range.'
                     return False
 

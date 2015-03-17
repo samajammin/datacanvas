@@ -55,9 +55,6 @@
                 <a href="#charts">Charts</a>
             </li>
             <li>
-                <a href="#about">About</a>
-            </li>
-            <li>
                 <a href="#services">Services</a>
             </li>
             <li>
@@ -96,21 +93,39 @@
    <!-- Charts -->
     <section id="charts" class="charts">
         <div class="container">
-            <h2>All my charts n shit</h2>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>
-    
-    <!-- About -->
-    <section id="about" class="about">
-        <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Stylish Portfolio is the perfect theme for your next project!</h2>
-                    <p class="lead">This theme features some wonderful photography courtesy of <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a>.</p>
+                    <h2>All my charts n shit</h2>
                 </div>
             </div>
+            <div class="row">
+              <div class='col-md-4' id="chart-ring-month">
+                <h6>Month Pie Chart
+                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+              <div class='col-md-4' id="chart-ring-sensor">
+                <h6>Sensor Pie Chart
+                 <a class="reset" href="javascript:sensorRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+              <div class='col-md-4' id="dow-chart">
+                <h6>DOW Bar Chart
+                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+            </div>
+
+              <div class='row'>
+                <div class='col-md-12' id="chart-line-soundperhour">
+                  <h6> Total Sound by Hour
+                    <a class="reset" href="javascript:hoursChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                  </h6>
+                </div>
+              </div>
+
             <!-- /.row -->
         </div>
         <!-- /.container -->
@@ -122,7 +137,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Our Services</h2>
+                    <h2>About the Project</h2>
                     <hr class="small">
                     <div class="row">
                         <div class="col-md-3 col-sm-6">
@@ -395,6 +410,13 @@
 
     map.fitBounds(sensorLayer.getBounds());
     </script>
+    <script src="../static/js/crossfilter.v1.js"></script>
+    <script src="../static/js/d3.v3.js"></script>
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/dc.js"></script>
+    <link href="../static/css/dc.css" rel="stylesheet"/>
+    <script src="../static/js/charts.js"></script>
+    <script src="../static/js/colorbrewer.js"></script>
 </body>
 
 </html>

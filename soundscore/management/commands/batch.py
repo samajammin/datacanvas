@@ -30,14 +30,14 @@ class Command(BaseCommand):
         return sound * 0.0158 + 49.184
 
     def aggregate(self, queryset, time, sensor_obj):
-        h = HourlySound.objects.get_or_create(
+        h = HourlySound.objects.update_or_create(
             hour = time,
             sound_avg = self.get_decibels(queryset.aggregate(Avg('sound'))['sound__avg']),
             sound_min = self.get_decibels(queryset.aggregate(Min('sound'))['sound__min']),
             sound_max = self.get_decibels(queryset.aggregate(Max('sound'))['sound__max']),
             sound_std = self.get_decibels(queryset.aggregate(StdDev('sound'))['sound__stddev']),
             sound_var = self.get_decibels(queryset.aggregate(Variance('sound'))['sound__variance']),
-            sound_count = queryset.aggregate(StdDev('sound'))['sound__stddev'],
+            sound_count = queryset.count(),
             sensor = sensor_obj
         )
         print h

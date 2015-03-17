@@ -1,21 +1,29 @@
-import datetime
-from decimal import Decimal
 from django.db import models
+from django.db.models import Avg, Sum
+
 
 class Location(models.Model):
-    # todo consider other field formats. Decimal didn't work with API script
-    # https://docs.djangoproject.com/en/1.7/ref/contrib/gis/model-api/#geography
-    # longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    # latitude = models.DecimalField(max_digits=8, decimal_places=6)
     longitude = models.FloatField()
     latitude = models.FloatField()
 
+    @property
+    def avg_sound(self):
+        return self.sensor.hours.aggregate(Avg('sound_avg'))['sound_avg__avg']
+
+    @property
+    def avg_var(self):
+        return self.sensor.hours.aggregate(Avg('sound_var'))['sound_var__avg']
+
+    @property
+    def avg_std(self):
+        return self.sensor.hours.aggregate(Avg('sound_std'))['sound_std__avg']
+
+    @property
+    def sound_count(self):
+        return self.sensor.hours.aggregate(Sum('sound_count'))['sound_count_sum']
+
     def __unicode__(self):
         return u"[{}, {}]".format(self.longitude, self.latitude)
-
-    # todo other location api to pull in additional info... overwrite save method?
-    # city / neighborhood / country / continent
-    # def get_info (self):
 
     class Meta:
         unique_together = ('longitude', 'latitude',)
@@ -24,7 +32,7 @@ class Location(models.Model):
 class Sensor(models.Model):
     source_id = models.CharField(max_length=120, unique=True)
     nickname = models.CharField(max_length=120, blank=True)
-    # assuming one to one relationship... i.e. sensors don't change locations & never will have multiple sensors at the same location
+    # assumes one to one relationship... i.e. sensors don't change locations & never will have multiple sensors at the same location
     location = models.OneToOneField(Location)
 
     def __unicode__(self):
