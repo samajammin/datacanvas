@@ -90,8 +90,8 @@
       <file leaf-file-name="batch.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/soundscore/management/commands/batch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6741214" vertical-offset="71" max-vertical-offset="799">
-              <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.53833866" vertical-offset="71" max-vertical-offset="799">
+              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -1125,8 +1125,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/soundscore/management/commands/batch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6741214" vertical-offset="71" max-vertical-offset="799">
-          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.53833866" vertical-offset="71" max-vertical-offset="799">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
           <folding />
         </state>
       </provider>
