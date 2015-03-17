@@ -89,6 +89,8 @@ class HourlySound(models.Model):
     class Meta:
         unique_together = ('hour', 'sensor',)
 
+#         todo property functions for hourofday / dayofweek / dayofmonth... or do all grouping on client side?
+
 # class DailySound(models.Model):
 #     date = models.DateField()
 #     sound_avg = models.FloatField()

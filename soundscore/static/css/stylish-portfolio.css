@@ -177,6 +177,7 @@ hr.small {
 
 /* Charts */
 
+/*todo i don't think % is the best way to manage height... producing some overlap*/
 .charts {
     padding: 50px 0;
     height: 100%;
