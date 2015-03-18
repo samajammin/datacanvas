@@ -13,6 +13,10 @@
 
     <title>SoundScore | See what you hear</title>
 
+    <!-- Mapbox -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
     <!-- Bootstrap Core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -30,9 +34,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Mapbox -->
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
     <style>
 
     </style>
@@ -55,7 +57,7 @@
                 <a href="#charts">Charts</a>
             </li>
             <li>
-                <a href="#services">Services</a>
+                <a href="#decibels">Decibel Info</a>
             </li>
             <li>
                 <a href="#portfolio">Portfolio</a>
@@ -67,14 +69,21 @@
     </nav>
 
     <!-- Header -->
+
     <header id="top" class="header">
+{#todo tint not working! get frontend help#}
+{#    <div id="tint">#}
         <div class="text-vertical-center">
-            <h1>SoundScore</h1>
-            <h3>See What You Hear</h3>
-            <br>
-            <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
+
+                <h1>SoundScore</h1>
+                <h3>See What You Hear</h3>
+                <br>
+                <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
+
         </div>
+{#    </div>#}
     </header>
+
 
     <!-- Map -->
     <section id="map" class="map">
@@ -132,7 +141,7 @@
 
               <div class='row'>
                 <div class='col-md-12' id="date-chart">
-                  <h6> Total Sound by Hour
+                  <h6> Total Sound by Day
                     <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                   </h6>
                 </div>
@@ -141,6 +150,25 @@
         </div>
         <!-- /.container -->
     </section>
+
+ <!-- Charts -->
+    <section id="decibels" class="decibels">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Decibels? What are we talking about here?</h2>
+                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">
+                </div>
+{#                <div class="col-lg-6 text-center">#}
+{#                    <h2>Decibels? What are we talking about here?</h2>#}
+{#                </div>#}
+            </div>
+
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
 
     <!-- Services -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
@@ -362,64 +390,113 @@
     </script>
 
     <script>
-    L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
+        $.getJSON( "../static/js/locations.json", function( data ) {
+            var gjson = [
+                {
+                  "type": "FeatureCollection",
+                  "features": []
+                }
+                ];
 
-    var geojson = [
-      {
-      "type": "FeatureCollection",
-      "features": [
-          {% for location in locations %}
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Point",
-                "coordinates": [
-                  {{ location.longitude }},
-                  {{ location.latitude }}
-                ]
-              },
-              "properties": {
-                "title": "({{ location.latitude }}, {{ location.longitude }})",
-                "id": {{ location.id }},
-{#                    "marker-color": "#9c89cc",#}
-                "marker-color": "#000000",
-                "marker-size": "small",
-{#                    "marker-symbol": "mobilephone"#}
-              }
-            },
-          {% endfor %}
-      ]
-    }
-    ];
+            for(i=0; i < data.length; i++){
+    {#            console.log(data[i]);#}
+                var feature = {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                      data[i].longitude,
+                      data[i].latitude
+                    ]
+                  },
+                  "properties": {
+                    "title": "(" + data[i].sensor + ")",
+                    "id": data[i].sensor,
+    {#                "marker-color": "#9c89cc",#}
+    {#                "marker-color": "#000000",#}
+    {#                "marker-size": "small"#}
+                    "avg_sound": data[i].avg_sound
 
-    var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {
-        scrollWheelZoom: false,
-        legendControl: {
-            position: 'bottomleft'
-        }
-    });
+                  }
+                };
+{#                console.log(gjson);#}
+    {#            console.log(feature);#}
+    {#            console.log(gjson[0].features);#}
+                gjson[0].features.push(feature);
 
-{#        standard markers#}
-{#        var sensorLayer = L.mapbox.featureLayer().addTo(map);#}
-{#        sensorLayer.setGeoJSON(geojson);#}
+            }
+            L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
+
+{#            var geojson = [#}
+{#              {#}
+{#              "type": "FeatureCollection",#}
+{#              "features": [#}
+{#                  {% for location in locations %}#}
+{#                    {#}
+{#                      "type": "Feature",#}
+{#                      "geometry": {#}
+{#                        "type": "Point",#}
+{#                        "coordinates": [#}
+{#                          {{ location.longitude }},#}
+{#                          {{ location.latitude }}#}
+{#                        ]#}
+{#                      },#}
+{#                      "properties": {#}
+{#                        "title": "({{ location.latitude }}, {{ location.longitude }})",#}
+{#                        "id": {{ location.id }},#}
+        {#                    "marker-color": "#9c89cc",#}
+{#                        "marker-color": "#000000",#}
+{#                        "marker-size": "small",#}
+        {#                    "marker-symbol": "mobilephone"#}
+        {#todo set noise properties to pull in an maniuplate size / color#}
+        {#"radius"#}
+{#                      }#}
+{#                    },#}
+{#                  {% endfor %}#}
+{#              ]#}
+{#            }#}
+{#            ];#}
+
+            var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {
+                scrollWheelZoom: false,
+                legendControl: {
+                    position: 'bottomleft'
+                }
+            });
+
+        {#        standard markers#}
+        {#        var sensorLayer = L.mapbox.featureLayer().addTo(map);#}
+        {#        sensorLayer.setGeoJSON(geojson);#}
 
 
-{#        circle markers #}
-    var sensorLayer = L.geoJson(geojson, {
-        pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: feature.properties.id * 2
-            })
-        }
-    }).addTo(map);
+        {#        circle markers #}
+            var sensorLayer = L.geoJson(gjson, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: feature.properties.avg_sound / 5,
+{#                        fill: black;#}
+                    })
+                }
+            }).addTo(map);
 
-    sensorLayer.on('click', function(e) {
-        map.panTo(e.layer.getLatLng());
-    });
+        {#    sensorLayer.on('click', function(e) {#}
+        {#        map.panTo(e.layer.getLatLng());#}
+        {#    });#}
 
-    map.legendControl.addLegend('<h2>Sensors of San Francisco</h2>');
+            map.legendControl.addLegend('<h2>Sensors of San Francisco</h2>');
 
-    map.fitBounds(sensorLayer.getBounds());
+            map.fitBounds(sensorLayer.getBounds());
+
+            // Disable drag and zoom handlers.
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+
+            // Disable tap handler, if present.
+            if (map.tap) map.tap.disable();
+
+        });
     </script>
     <script src="../static/js/crossfilter.v1.js"></script>
     <script src="../static/js/d3.v3.js"></script>

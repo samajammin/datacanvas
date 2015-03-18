@@ -16,6 +16,7 @@ body {
     font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+
 .text-vertical-center {
     display: table-cell;
     text-align: center;
@@ -161,6 +162,13 @@ hr.small {
     background-size: cover;
     -o-background-size: cover;
     color: white;
+    /*background-color: rgba(0,0,0,0.4);*/
+}
+
+/* Header */
+
+#tint {
+    background-color: rgba(0,0,0,0.4);
 }
 
 /* Map */
@@ -180,7 +188,13 @@ hr.small {
 /*todo i don't think % is the best way to manage height... producing some overlap*/
 .charts {
     padding: 50px 0;
-    height: 100%;
+    /*height: 100%;*/
+}
+
+/* Decibels */
+
+.decibels {
+    padding: 50px 0;
 }
 
 /* Services */
@@ -252,3 +266,8 @@ hr.small {
 footer {
     padding: 100px 0;
 }
+
+/*path {*/
+    /*fill: red;*/
+    /*stroke: black;*/
+/*}*/
