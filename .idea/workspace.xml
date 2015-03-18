@@ -81,8 +81,8 @@
       <file leaf-file-name="charts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/soundscore/static/js/charts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16164818" vertical-offset="731" max-vertical-offset="7276">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="52" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.32329637" vertical-offset="5372" max-vertical-offset="7395">
+              <caret line="328" column="25" selection-start-line="328" selection-start-column="25" selection-end-line="328" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -1143,8 +1143,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/soundscore/static/js/charts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16164818" vertical-offset="731" max-vertical-offset="7276">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="52" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.32329637" vertical-offset="5372" max-vertical-offset="7395">
+          <caret line="328" column="25" selection-start-line="328" selection-start-column="25" selection-end-line="328" selection-end-column="25" />
           <folding />
         </state>
       </provider>

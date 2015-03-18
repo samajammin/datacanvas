@@ -6,7 +6,7 @@ var dowChart = dc.rowChart("#dow-chart");
 //var monthRingChart   = dc.pieChart("#chart-ring-month");
 var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
 var datatable = dc.dataTable("#dc-data-table");
-var hoursChart  = dc.compositeChart("#chart-line-soundperhour");
+var hoursChart  = dc.lineChart("#chart-line-soundperhour");
 var hodChart = dc.barChart('#hod-chart');
 //var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
@@ -143,6 +143,8 @@ d3.json("../static/js/newhours.json", function(data){
 
     var dowAvgAvg = dowDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
     var hodAvgAvg = hodDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
+    var dateAvgAvg = dateDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
+    var hourAvgAvg = hourDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     var monthOfYear = ["Jan", "Feb", "March", "April"];
@@ -207,7 +209,7 @@ d3.json("../static/js/newhours.json", function(data){
           .elasticX(true)
           .xAxis().ticks(4);
 
-    dowChart.valueAccessor(function(p) { console.log(p); return p.value.count > 0 ? p.value.total / p.value.count : 0; });
+    dowChart.valueAccessor(function(p) {return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
 
 
@@ -251,13 +253,13 @@ d3.json("../static/js/newhours.json", function(data){
         .x(d3.scale.linear().domain([0, 23]))
         .renderHorizontalGridLines(true);
 
-    hodChart.valueAccessor(function(p) { console.log(p); return p.value.count > 0 ? p.value.total / p.value.count : 0; });
+    hodChart.valueAccessor(function(p) {return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
     dateBarChart
         .width(1000).height(500)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(dateDim)
-        .group(dateTotal)
+        .group(dateAvgAvg)
         .round(dc.round.floor)
         .alwaysUseRounding(true)
         .brushOn(true)
@@ -267,6 +269,8 @@ d3.json("../static/js/newhours.json", function(data){
         .elasticY(true)
         .gap(3)
         .yAxisLabel("Decibels");
+
+    dateBarChart.valueAccessor(function(p) {return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
 
         // customize the filter displayed in the control span
@@ -281,7 +285,7 @@ d3.json("../static/js/newhours.json", function(data){
     //    function (v) { return v + '%'; });
     //fluctuationChart.yAxis().ticks(5);
 
-    dateBarChart.xUnits(function(){return 50;});
+    dateBarChart.xUnits(function(){return 60;});
 
 //            var tableGroup = monthDim.group().reduce(
 //              function reduceAdd(p,v) {
@@ -322,20 +326,23 @@ d3.json("../static/js/newhours.json", function(data){
         .width(1000).height(500)
         .dimension(hourDim)
         .brushOn(true)
-//                .group(sound)
+        .group(hourAvgAvg)
         .x(d3.time.scale().domain([minHour,maxHour]))
-        .compose([
-            dc.lineChart(hoursChart).group(sound, "Avg"),
-            dc.lineChart(hoursChart).group(soundMax, "Max"),
-            dc.lineChart(hoursChart).group(soundMin, "Min")
+        //.compose([
+            //dc.lineChart(hoursChart).group(hourAvgAvg, "Avg"),
+            //dc.lineChart(hoursChart).group(soundMax, "Max"),
+            //dc.lineChart(hoursChart).group(soundMin, "Min")
 //                    dc.lineChart(hoursChart).group(soundCount, "Count")
-        ])
+//        ])
         .legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
             //                    todo elastic X doesn't work, I assume due to domain set to minHour/maxHour
         .elasticX(true)
         .elasticY(true)
         .yAxisLabel("Decibels");
 //                .xAxisLabel("Date");
+
+    //todo this type of chart must work differently with value (multiple lines)
+    hoursChart.valueAccessor(function(p) {return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
 
     //#### Bubble Chart
