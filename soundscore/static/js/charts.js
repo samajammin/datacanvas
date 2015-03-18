@@ -3,7 +3,7 @@
  */
 
 var dowChart = dc.rowChart("#dow-chart");
-var monthRingChart   = dc.pieChart("#chart-ring-month");
+//var monthRingChart   = dc.pieChart("#chart-ring-month");
 var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
 var datatable = dc.dataTable("#dc-data-table");
 var hoursChart  = dc.compositeChart("#chart-line-soundperhour");
@@ -13,6 +13,7 @@ var dateBarChart  = dc.barChart("#date-chart");
 
 //        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
 d3.json("../static/js/newhours.json", function(data){
+//d3.json("../static/js/count21.json", function(data){
     var api_data = data['results'];
 //            console.log(api_data.length);
 //            console.log(api_data);
@@ -45,10 +46,32 @@ d3.json("../static/js/newhours.json", function(data){
 
 //            var soundMax = cf.groupAll().reduce
 
+    function reduceAdd(p, v) {
+        //console.log("p");
+        //console.log(p);
+        //console.log("v");
+        //console.log(v);
+      ++p.count;
+      p.total += v['sound_avg'];
+      return p;
+    }
+
+    function reduceRemove(p, v) {
+      --p.count;
+      p.total -= v['sound_avg'];
+      return p;
+    }
+
+    function reduceInitial() {
+      return {count: 0, total: 0};
+    }
+
+
     <!-- todo clean up dimensions, all in one place & only the ones we need -->
 //            DIMENSIONS
-    var soundAvgDim = cf.dimension(function(d) { return d.sound_avg; });
-    var sensorDim = cf.dimension(function(d) { return d.sensor; });
+//    var soundAvgDim = cf.dimension(function(d) { return d.sound_avg; });
+
+
 
 
 
@@ -58,28 +81,28 @@ d3.json("../static/js/newhours.json", function(data){
 //            var sensorFilterDim = cf.dimension(function(d) { return d.sensor; });
 //            sensorFilterDim.filter(2);
 
-    var countSensor = sensorDim.group().reduceCount();
-    console.log("countSensor:");
-    console.log(countSensor);
-    console.log("countSensor size: " + countSensor.size());
-    var all = countSensor.all();
-
-    var sumSensor = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
-    console.log("sumSensor:");
-    console.log(sumSensor);
-    console.log("sumSensor size: " + sumSensor.size());
-    var allsum = sumSensor.all();
-
-//              reduce creates nice key/value pairs:
-    for(i = 0; i < sumSensor.size(); i++){
-//                var sensorCount = sensorDim.filter(i).top(Infinity);
-//                console.log("Sensor " + i + ": " + sensorCount.length + " measurements");
-        console.log("Sensor " + all[i].key + ": " + all[i].value + " measurements");
-        console.log("Sensor " + allsum[i].key + ": " + allsum[i].value + " total sound");
-        console.log("Sensor " + allsum[i].key + ": " + allsum[i].value/all[i].value + " avg sound");
-//                console.log("Sensor " + bottom[i].key + ": " + bottom[i].value + " measurements");
-//                sensorDim.filterAll();
-    }
+//    var countSensor = sensorDim.group().reduceCount();
+//    console.log("countSensor:");
+//    console.log(countSensor);
+//    console.log("countSensor size: " + countSensor.size());
+//    var all = countSensor.all();
+//
+//    var sumSensor = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
+//    console.log("sumSensor:");
+//    console.log(sumSensor);
+//    console.log("sumSensor size: " + sumSensor.size());
+//    var allsum = sumSensor.all();
+//
+////              reduce creates nice key/value pairs:
+//    for(i = 0; i < sumSensor.size(); i++){
+////                var sensorCount = sensorDim.filter(i).top(Infinity);
+////                console.log("Sensor " + i + ": " + sensorCount.length + " measurements");
+//        console.log("Sensor " + all[i].key + ": " + all[i].value + " measurements");
+//        console.log("Sensor " + allsum[i].key + ": " + allsum[i].value + " total sound");
+//        console.log("Sensor " + allsum[i].key + ": " + allsum[i].value/all[i].value + " avg sound");
+////                console.log("Sensor " + bottom[i].key + ": " + bottom[i].value + " measurements");
+////                sensorDim.filterAll();
+//    }
 
 
 
@@ -94,26 +117,32 @@ d3.json("../static/js/newhours.json", function(data){
         d.date = d3.time.day(d.hour);
     });
 
-    var feb = "2015-02-14T00:23:50"
-    var february = parseHour(feb);
-    console.log(feb);
-    console.log(february);
-    console.log(d3.time.month(february));
+    //var feb = "2015-02-14T00:23:50"
+    //var february = parseHour(feb);
+    //console.log(feb);
+    //console.log(february);
+    //console.log(d3.time.month(february));
 
+    var sensorDim = cf.dimension(function(d) { return d.sensor; });
     var hourDim = cf.dimension(function(d) { return d.hour;});
-    var monthDim  = cf.dimension(function(d) {return d.month;});
+    //var monthDim  = cf.dimension(function(d) {return d.month;});
     var dowDim  = cf.dimension(function(d) {return d.dow;});
     var hodDim  = cf.dimension(function(d) {return d.hod;});
     var dateDim  = cf.dimension(function(d) {return d.date;});
 
-    var monthTotal = monthDim.group().reduceSum(function(d) {return d.sound_avg;});
+
+
+    //var monthTotal = monthDim.group().reduceSum(function(d) {return d.sound_avg;});
 
     var hodTotal = hodDim.group().reduceSum(function(d) {return d.sound_avg;});
     var dateTotal = dateDim.group().reduceSum(function(d) {return d.sound_avg;});
 
-    var dowTotal = dowDim.group().reduceSum(function(d) {return d.sound_avg;});
-    var dowCount = dowDim.group().reduceCount(function(d) {return d.sound_avg;});
-    var dowAvg = dowDim.group().reduceSum(function(d) {if (d.sound_count === 0){return 0} else{return d.sound_avg / d.sound_count;} });
+    //var dowTotal = dowDim.group().reduceSum(function(d) {return d.sound_avg;});
+    //var dowCount = dowDim.group().reduceCount(function(d) {return d.sound_avg;});
+    //var dowAvg = dowDim.group().reduceSum(function(d) {if (d.sound_count === 0){return 0} else{return d.sound_avg / d.sound_count;} });
+
+    var dowAvgAvg = dowDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
+    var hodAvgAvg = hodDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     var monthOfYear = ["Jan", "Feb", "March", "April"];
@@ -125,8 +154,8 @@ d3.json("../static/js/newhours.json", function(data){
     var soundCount = hourDim.group().reduceSum(function(d) {return d.sound_count;});
     var minHour = hourDim.bottom(1)[0].hour;
     var maxHour = hourDim.top(1)[0].hour;
-    var minMonth = monthDim.bottom(1)[0].month;
-    var maxMonth = monthDim.top(1)[0].month;
+    //var minMonth = monthDim.bottom(1)[0].month;
+    //var maxMonth = monthDim.top(1)[0].month;
     var minDate = dateDim.bottom(1)[0].date;
     var maxDate = dateDim.top(1)[0].date;
 
@@ -135,32 +164,30 @@ d3.json("../static/js/newhours.json", function(data){
 
 
 // todo tweak reduce functions to get avg sound / sensor values
+    //function reduceAddAvg(attr) {
+    //  return function(p,v) {
+    //    ++p.count;
+    //    p.sum += v[attr];
+    //    p.avg = p.sum/p.count;
+    //    return p;
+    //  };
+    //}
+    //function reduceRemoveAvg(attr) {
+    //  return function(p,v) {
+    //    --p.count;
+    //    p.sum -= v[attr];
+    //    p.avg = p.sum/p.count;
+    //    return p;
+    //  };
+    //}
+    //function reduceInitAvg() {
+    //  return {count:0, sum:0, avg:0};
+    //}
 
-
-    function reduceAddAvg(attr) {
-      return function(p,v) {
-        ++p.count;
-        p.sum += v[attr];
-        p.avg = p.sum/p.count;
-        return p;
-      };
-    }
-    function reduceRemoveAvg(attr) {
-      return function(p,v) {
-        --p.count;
-        p.sum -= v[attr];
-        p.avg = p.sum/p.count;
-        return p;
-      };
-    }
-    function reduceInitAvg() {
-      return {count:0, sum:0, avg:0};
-    }
-
-    var sensorAvgGroup = sensorDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
-    var soundAvgGroup = soundAvgDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
-    var dowAvgGroup = hourDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
-      console.log(soundAvgGroup);
+    //var sensorAvgGroup = sensorDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
+    //var soundAvgGroup = soundAvgDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
+    //var dowAvgGroup = hourDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitAvg);
+    //  console.log(soundAvgGroup);
 //            var statesAvgGroup = statesAvgDimension.group().reduce(reduceAddAvg('cost'), reduceRemoveAvg('cost'), reduceInitAvg);
 //
 
@@ -169,7 +196,7 @@ d3.json("../static/js/newhours.json", function(data){
           .width(300).height(300)
           .margins({top: 10, left: 20, right: 10, bottom: 20})
 //              .group(dowDim.group())
-          .group(dowTotal)
+          .group(dowAvgAvg)
           .dimension(dowDim)
           .label(function (d) {
               return dayOfWeekNames[d.key];
@@ -180,19 +207,19 @@ d3.json("../static/js/newhours.json", function(data){
           .elasticX(true)
           .xAxis().ticks(4);
 
+    dowChart.valueAccessor(function(p) { console.log(p); return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
 
 
 
-
-    monthRingChart
-        .width(300).height(300)
-        .dimension(monthDim)
-        .group(monthDim.group())
-        .label(function (d) {
-          return monthOfYear[d.key];
-        })
-        .innerRadius(30);
+    //monthRingChart
+    //    .width(300).height(300)
+    //    .dimension(monthDim)
+    //    .group(monthDim.group())
+    //    .label(function (d) {
+    //      return monthOfYear[d.key];
+    //    })
+    //    .innerRadius(30);
 
 
 
@@ -214,7 +241,7 @@ d3.json("../static/js/newhours.json", function(data){
         .height(300)
         .margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(hodDim)
-        .group(hodTotal)
+        .group(hodAvgAvg)
         .elasticY(true)
         // (optional) set gap between bars manually in px, :default=2
         .gap(1)
@@ -223,6 +250,8 @@ d3.json("../static/js/newhours.json", function(data){
         .alwaysUseRounding(true)
         .x(d3.scale.linear().domain([0, 23]))
         .renderHorizontalGridLines(true);
+
+    hodChart.valueAccessor(function(p) { console.log(p); return p.value.count > 0 ? p.value.total / p.value.count : 0; });
 
     dateBarChart
         .width(1000).height(500)
