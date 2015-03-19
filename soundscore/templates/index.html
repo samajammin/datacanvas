@@ -131,6 +131,27 @@
               </div>
             </div>
 
+
+            <div class="row">
+              <div class='col-md-4' id="chart-ring-month">
+                <h6>Month Pie Chart
+                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+              <div class='col-md-4' id="hour-ring-chart">
+                <h6>Sensor Pie Chart
+                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+              <div class='col-md-4' id="singlehour-ring-chart">
+                <h6>DOW Bar Chart
+                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+            </div>
+
               <div class='row'>
                 <div class='col-md-12' id="chart-line-soundperhour">
                   <h6> Total Sound by Hour
@@ -147,6 +168,15 @@
                 </div>
               </div>
             <!-- /.row -->
+              <div class='row'>
+                <div class='col-md-12' id="sensor-bubble-chart">
+                  <h6> Sound by Sensor
+                    <a class="reset" href="javascript:sensorBubbleChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                  </h6>
+                </div>
+              </div>
+            <!-- /.row -->
+
         </div>
         <!-- /.container -->
     </section>

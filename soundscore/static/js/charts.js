@@ -3,12 +3,14 @@
  */
 
 var dowChart = dc.rowChart("#dow-chart");
-//var monthRingChart   = dc.pieChart("#chart-ring-month");
+var monthRingChart   = dc.pieChart("#chart-ring-month");
 var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
+var hourRingChart   = dc.pieChart("#hour-ring-chart");
+var singleHourRingChart   = dc.pieChart("#singlehour-ring-chart");
 var datatable = dc.dataTable("#dc-data-table");
 var hoursChart  = dc.lineChart("#chart-line-soundperhour");
 var hodChart = dc.barChart('#hod-chart');
-//var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
+var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
 
 //        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
@@ -33,6 +35,8 @@ d3.json("../static/js/newhours.json", function(data){
 
     var cf = crossfilter(api_data);
 
+
+    //reduce functions for custom attributes
     function reduceAddAvg(att) {
         return function(p, v) {
             ++p.count;
@@ -59,15 +63,45 @@ d3.json("../static/js/newhours.json", function(data){
                 p.avg = 0;
             }
             return p;
-        }
-    };
+        };
+    }
 
     function reduceInitialAvg() {
         return {count: 0, total: 0, avg:0};
     }
 
+    // reduce functions for sound attributes
+    function reduceAdd(p, v) {
+        ++p.count;
+        p.avg_total += v['sound_avg'];
+        if (p.count > 0) { p.avg = p.avg_total / p.count;}
+        else { p.avg = 0;}
+        p.std_total += v['sound_std'];
+        if (p.count > 0) { p.std_avg = p.std_total / p.count;}
+        else { p.std_avg = 0;}
+        return p;
+    }
+
+    function reduceRemove(p, v) {
+        --p.count;
+        p.avg_total -= v['sound_avg'];
+        if (p.count > 0) { p.avg = p.avg_total / p.count;}
+        else { p.avg = 0;}
+        p.std_total -= v['sound_std'];
+        if (p.count > 0) { p.std_avg = p.std_total / p.count;}
+        else { p.std_avg = 0;}
+        return p;
+    }
+
+
+    function reduceInitial() {
+        return {count: 0, avg_total: 0, avg:0, std_total:0, std_avg:0};
+    }
+
+
     <!-- todo clean up dimensions, all in one place & only the ones we need -->
 
+    var numberFormat = d3.format('.2f');
     var parseHour = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
     api_data.forEach(function(d) {
         d.hour = parseHour(d.hour);
@@ -85,25 +119,49 @@ d3.json("../static/js/newhours.json", function(data){
 
     var sensorDim = cf.dimension(function(d) { return d.sensor; });
     var hourDim = cf.dimension(function(d) { return d.hour;});
-    //var monthDim  = cf.dimension(function(d) {return d.month;});
+    var monthDim  = cf.dimension(function(d) {return d.month;});
     var dowDim  = cf.dimension(function(d) {return d.dow;});
     var hodDim  = cf.dimension(function(d) {return d.hod;});
     var dateDim  = cf.dimension(function(d) {return d.date;});
 
+    var hourGroupDim = cf.dimension(function (d) {
+        var hr = d.hod;
+        if (hr <= 2) {
+            return '12AM - 3AM';
+        } else if (hr > 2 && hr <= 5) {
+            return '3AM - 6AM';
+        } else if (hr > 5 && hr <= 8) {
+            return '6AM - 9AM';
+        } else if (hr > 8 && hr <= 11) {
+            return '9AM - 12PM';
+        } else if (hr > 11 && hr <= 14) {
+            return '12PM - 3PM';
+        } else if (hr > 14 && hr <= 17) {
+            return '3PM - 6PM';
+        } else if (hr > 17 && hr <= 20) {
+            return '6PM - 9PM';
+        } else {
+            return '9PM - 12PM';
+        }
+    });
+
     //var monthTotal = monthDim.group().reduceSum(function(d) {return d.sound_avg;});
-
-    var hodTotal = hodDim.group().reduceSum(function(d) {return d.sound_avg;});
-    var dateTotal = dateDim.group().reduceSum(function(d) {return d.sound_avg;});
-
+    //var hodTotal = hodDim.group().reduceSum(function(d) {return d.sound_avg;});
+    //var dateTotal = dateDim.group().reduceSum(function(d) {return d.sound_avg;});
     //var dowTotal = dowDim.group().reduceSum(function(d) {return d.sound_avg;});
     //var dowCount = dowDim.group().reduceCount(function(d) {return d.sound_avg;});
 
     var dowAvg = dowDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
-    var howAvg = hodDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
+    var hodAvg = hodDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     var dateAvg = dateDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     var hourAvg = hourDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
+    var sensorAvg = sensorDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
+    //var hourGroup = hourGroupDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
+    //var hourGroup = hourGroupDim.group().reduceCount(function(d) {return d.sound_avg;});
+    var hourGroup = hourGroupDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
+    var hodGroup = hodDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
 
-    console.log(dateAvg.all());
+    console.log(hourGroup.all());
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     var monthOfYear = ["Jan", "Feb", "March", "April"];
@@ -134,7 +192,9 @@ d3.json("../static/js/newhours.json", function(data){
           .title(function (d) {
               return d.value;
           })
-          .elasticX(true)
+
+          //.elasticX(true)
+          //.x(d3.scale.linear().domain([0, 90]))
           .xAxis().ticks(4);
 
     dowChart.valueAccessor(function(p) {return p.value.avg; });
@@ -142,14 +202,14 @@ d3.json("../static/js/newhours.json", function(data){
 
 
 
-    //monthRingChart
-    //    .width(300).height(300)
-    //    .dimension(monthDim)
-    //    .group(monthDim.group())
-    //    .label(function (d) {
-    //      return monthOfYear[d.key];
-    //    })
-    //    .innerRadius(30);
+    monthRingChart
+        .width(300).height(300)
+        .dimension(monthDim)
+        .group(monthDim.group())
+        .label(function (d) {
+          return monthOfYear[d.key];
+        })
+        .innerRadius(30);
 
 
 
@@ -157,7 +217,50 @@ d3.json("../static/js/newhours.json", function(data){
         .width(300).height(300)
         .dimension(sensorDim)
         .group(sensorDim.group())
-        .innerRadius(30);
+        .innerRadius(60);
+
+    hourRingChart
+        .width(300).height(300)
+        .dimension(hourGroupDim.group())
+        .group(hourGroup)
+        .innerRadius(30)
+        .colors(colorbrewer.RdBu[8])
+        //.colors(['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#dadaeb'])
+        // (optional) define color domain to match your data domain if you want to bind data or color
+        .colorDomain([74, 76])
+        .renderTitle(true) // (optional) whether chart should render titles, :default = false
+        .title(function (p) {
+            return [
+                p.key,
+                'Average Noise: ' + numberFormat(p.value.avg) + ' dB'
+            ].join('\n');
+        })
+        // (optional) define color value accessor
+        .colorAccessor(function(d, i){return d.value.avg;});
+
+    hourRingChart.valueAccessor(function(p) {return p.value.avg; });
+
+    singleHourRingChart
+        .width(300).height(300)
+        .dimension(hodDim.group())
+        .group(hodGroup)
+        .innerRadius(30)
+        .colors(colorbrewer.RdBu[8])
+        //.colors(['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#dadaeb'])
+        // (optional) define color domain to match your data domain if you want to bind data or color
+        .colorDomain([74, 76])
+        .renderTitle(true) // (optional) whether chart should render titles, :default = false
+        .renderLabel(true)
+        .title(function (p) {
+            return [
+                p.key,
+                'Average Noise: ' + numberFormat(p.value.avg) + ' dB'
+            ].join('\n');
+        })
+        // (optional) define color value accessor
+        .colorAccessor(function(d, i){return d.value.avg;});
+
+    singleHourRingChart.valueAccessor(function(p) {return p.value.avg; });
 
 
     //#### Bar Chart
@@ -171,8 +274,9 @@ d3.json("../static/js/newhours.json", function(data){
         .height(300)
         .margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(hodDim)
-        .group(howAvg)
+        .group(hodAvg)
         .elasticY(true)
+        //.y(d3.scale.linear().domain([60, 90]))
         // (optional) set gap between bars manually in px, :default=2
         .gap(1)
         // (optional) set filter brush rounding
@@ -185,7 +289,7 @@ d3.json("../static/js/newhours.json", function(data){
 
 
     dateBarChart
-        .width(1000).height(500)
+        .width(1000).height(300)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(dateDim)
         .group(dateAvg)
@@ -193,9 +297,10 @@ d3.json("../static/js/newhours.json", function(data){
         .alwaysUseRounding(true)
         .brushOn(true)
         .x(d3.time.scale().domain([minDate,maxDate]))
+        .y(d3.scale.linear().domain([60, 90]))
         //.filter([d3.time.month(parseHour("2015-02-14T00:23:50")),d3.time.month(parseHour("2015-03-14T00:23:50"))])
         //.legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
-        .elasticY(true)
+        //.elasticY(true)
         .gap(3)
         .yAxisLabel("Decibels");
 
@@ -252,11 +357,12 @@ d3.json("../static/js/newhours.json", function(data){
 
 <!-- todo get brush filter working -->
     hoursChart
-        .width(1000).height(500)
+        .width(1000).height(300)
         .dimension(hourDim)
         .brushOn(true)
         .group(hourAvg)
         .x(d3.time.scale().domain([minHour,maxHour]))
+        .y(d3.scale.linear().domain([60, 90]))
         //.compose([
             //dc.lineChart(hoursChart).group(hourAvg, "Avg"),
             //dc.lineChart(hoursChart).group(soundMax, "Max"),
@@ -266,7 +372,7 @@ d3.json("../static/js/newhours.json", function(data){
         .legend(dc.legend().x(950).y(10).itemHeight(13).gap(5))
             //                    todo elastic X doesn't work, I assume due to domain set to minHour/maxHour
         .elasticX(true)
-        .elasticY(true)
+        //.elasticY(true)
         .yAxisLabel("Decibels");
 //                .xAxisLabel("Date");
 
@@ -281,75 +387,76 @@ d3.json("../static/js/newhours.json", function(data){
     //on other charts within the same chart group.
     /* dc.bubbleChart('#yearly-bubble-chart', 'chartGroup') */
     //    todo figure out .colr/ key /value accessors
-    //sensorBubbleChart
-    //    .width(990) // (optional) define chart width, :default = 200
-    //    .height(250)  // (optional) define chart height, :default = 200
-    //    .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
-    //    .margins({top: 10, right: 50, bottom: 30, left: 40})
-    //    .dimension(sensorDim)
-    //    //Bubble chart expect the groups are reduced to multiple values which would then be used
-    //    //to generate x, y, and radius for each key (bubble) in the group
-    //    .group(sensorAvgGroup)
-    //    .colors(colorbrewer.RdYlGn[9]) // (optional) define color function or array for bubbles
-    //    .colorDomain([-500, 500]) //(optional) define color domain to match your data domain if you want to bind data or
-    //                              //color
-    //    //##### Accessors
-    //    //Accessor functions are applied to each value returned by the grouping
-    //    //
-    //    //* `.colorAccessor` The returned value will be mapped to an internal scale to determine a fill color
-    //    //* `.keyAccessor` Identifies the `X` value that will be applied against the `.x()` to identify pixel location
-    //    //* `.valueAccessor` Identifies the `Y` value that will be applied agains the `.y()` to identify pixel location
-    //    //* `.radiusValueAccessor` Identifies the value that will be applied agains the `.r()` determine radius size,
-    //    //*     by default this maps linearly to [0,100]
-    //    .colorAccessor(function (d) {
-    //        return d.value.avg;
-    //    })
-    //    .keyAccessor(function (p) {
-    //        return p.value.avg;
-    //    })
-    //    .valueAccessor(function (p) {
-    //        return p.value.sum;
-    //    })
-    //    .radiusValueAccessor(function (p) {
-    //        return p.value.sum;
-    //    })
-    //    .maxBubbleRelativeSize(0.3)
-    //    .x(d3.scale.linear().domain([-2500, 2500]))
-    //    .y(d3.scale.linear().domain([-100, 100]))
-    //    .r(d3.scale.linear().domain([0, 4000]))
-    //    //##### Elastic Scaling
-    //    //`.elasticX` and `.elasticX` determine whether the chart should rescale each axis to fit data.
-    //    //The `.yAxisPadding` and `.xAxisPadding` add padding to data above and below their max values in the same unit
-    //    //domains as the Accessors.
-    //    .elasticY(true)
-    //    .elasticX(true)
-    //    .yAxisPadding(100)
-    //    .xAxisPadding(500)
-    //    .renderHorizontalGridLines(true) // (optional) render horizontal grid lines, :default=false
-    //    .renderVerticalGridLines(true) // (optional) render vertical grid lines, :default=false
-    //    .xAxisLabel('Index Gain') // (optional) render an axis label below the x axis
-    //    .yAxisLabel('Index Gain %') // (optional) render a vertical axis lable left of the y axis
-    //    //#### Labels and  Titles
-    //    //Labels are displaed on the chart for each bubble. Titles displayed on mouseover.
-    //    .renderLabel(true) // (optional) whether chart should render labels, :default = true
-    //    .label(function (p) {
-    //        return p.key;
-    //    });
-        //.renderTitle(true) // (optional) whether chart should render titles, :default = false
-        //.title(function (p) {
-        //    return [
-        //        p.key,
-        //        'Index Gain: ' + numberFormat(p.value.absGain),
-        //        'Index Gain in Percentage: ' + numberFormat(p.value.percentageGain) + '%',
-        //        'Fluctuation / Index Ratio: ' + numberFormat(p.value.fluctuationPercentage) + '%'
-        //    ].join('\n');
-        //})
+    sensorBubbleChart
+        .width(990) // (optional) define chart width, :default = 200
+        .height(250)  // (optional) define chart height, :default = 200
+        .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
+        .margins({top: 10, right: 50, bottom: 30, left: 40})
+        .dimension(sensorDim)
+        //Bubble chart expect the groups are reduced to multiple values which would then be used
+        //to generate x, y, and radius for each key (bubble) in the group
+        .group(sensorAvg)
+        .colors(colorbrewer.RdYlGn[9]) // (optional) define color function or array for bubbles
+        .colorDomain([40, 90]) //(optional) define color domain to match your data domain if you want to bind data or
+                                  //color
+        //##### Accessors
+        //Accessor functions are applied to each value returned by the grouping
+        //
+        //* `.colorAccessor` The returned value will be mapped to an internal scale to determine a fill color
+        //* `.keyAccessor` Identifies the `X` value that will be applied against the `.x()` to identify pixel location
+        //* `.valueAccessor` Identifies the `Y` value that will be applied agains the `.y()` to identify pixel location
+        //* `.radiusValueAccessor` Identifies the value that will be applied agains the `.r()` determine radius size,
+        //*     by default this maps linearly to [0,100]
+        .colorAccessor(function (d) {
+            return d.value.avg;
+        })
+        .keyAccessor(function (p) {
+            return p.value.avg;
+        })
+        .valueAccessor(function (p) {
+            return p.value.std_avg;
+        })
+        .radiusValueAccessor(function (p) {
+            return p.value.count/2;
+        })
+        .maxBubbleRelativeSize(0.3)
+        .x(d3.scale.linear().domain([40, 90]))
+        .y(d3.scale.linear().domain([40, 70]))
+        .r(d3.scale.linear().domain([0, 4000]))
+        //##### Elastic Scaling
+        //`.elasticX` and `.elasticX` determine whether the chart should rescale each axis to fit data.
+        //The `.yAxisPadding` and `.xAxisPadding` add padding to data above and below their max values in the same unit
+        //domains as the Accessors.
+        //.elasticY(true)
+        //.elasticX(true)
+        .yAxisPadding(100)
+        .xAxisPadding(500)
+        .renderHorizontalGridLines(true) // (optional) render horizontal grid lines, :default=false
+        .renderVerticalGridLines(true) // (optional) render vertical grid lines, :default=false
+        .xAxisLabel('Average Noise Level') // (optional) render an axis label below the x axis
+        .yAxisLabel('Noise STD') // (optional) render a vertical axis lable left of the y axis
+        //#### Labels and  Titles
+        //Labels are displaed on the chart for each bubble. Titles displayed on mouseover.
+        .renderLabel(true) // (optional) whether chart should render labels, :default = true
+        .label(function (p) {
+            return p.key;
+        })
+        .renderTitle(true) // (optional) whether chart should render titles, :default = false
+        .title(function (p) {
+            return [
+                'Sensor: ' + p.key,
+                'Average Noise: ' + numberFormat(p.value.avg) + ' dB',
+                'Noise STD: ' + numberFormat(p.value.std_avg),
+                'Total Measurements' + numberFormat(p.value.count)
+            ].join('\n');
+        })
         //#### Customize Axis
         //Set a custom tick format. Note `.yAxis()` returns an axis object, so any additional method chaining applies
         //to the axis, not the chart.
-        //.yAxis().tickFormat(function (v) {
-        //    return v + '%';
-
+        .yAxis()
+            .tickFormat(function (v) {
+            return v;
+        });
 
 
 
