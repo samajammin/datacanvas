@@ -191,7 +191,7 @@ d3.json("../static/js/newhours.json", function(data){
     var sensorTotal = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
 
     dowChart
-          .width(300).height(300)
+          .width(250).height(300)
           .margins({top: 10, left: 20, right: 10, bottom: 20})
 //              .group(dowDim.group())
           .group(dowAvg)
@@ -239,13 +239,13 @@ d3.json("../static/js/newhours.json", function(data){
 
     //todo order slices
     hourRingChart
-        .width(300).height(300)
+        .width(275).height(300)
         .dimension(hourGroupDim)
         .group(hourGroup)
         .innerRadius(30)
         //.colors(colorbrewer.RdBu[8])
         .colors(colorbrewer.SdSc[5])
-        .colorDomain([74, 76])
+        .colorDomain([74, 76.5])
         .label(function (d) {
               return hodBuckets[d.key];
           })
