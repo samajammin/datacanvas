@@ -14,10 +14,11 @@ var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
 
 //        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
-d3.json("../static/js/newhours.json", function(data){
-//d3.json("../static/js/count21.json", function(data){
+//d3.json("../static/js/newhours.json", function(data){
+d3.json("/api/hours/?count=10000", function(data){
     var api_data = data['results'];
-//            console.log(api_data.length);
+            console.log('hour results received')
+            console.log(api_data.length);
 //            console.log(api_data);
 
 //        sample data object from the api_data array
@@ -170,7 +171,7 @@ d3.json("../static/js/newhours.json", function(data){
     var hourGroup = hourGroupDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
     var hodGroup = hodDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
 
-    console.log(hourGroup.all());
+    //console.log(hourGroup.all());
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     var monthOfYear = ["Jan", "Feb", "March", "April"];

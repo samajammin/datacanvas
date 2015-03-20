@@ -15,7 +15,7 @@
 //                standard markers
         var sensorLayer = L.mapbox.featureLayer().addTo(map);
 
-        $.getJSON( "../static/js/locations.json", function( data ) {
+        $.getJSON( "/api/locations/", function( data ) {
             var gjson = [
                 {
                   "type": "FeatureCollection",
