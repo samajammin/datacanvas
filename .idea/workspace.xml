@@ -31,13 +31,25 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/soundscore/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5277778" vertical-offset="7074" max-vertical-offset="10523">
-              <caret line="434" column="13" selection-start-line="434" selection-start-column="13" selection-end-line="434" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.38387716" vertical-offset="1772" max-vertical-offset="7684">
+              <caret line="116" column="47" selection-start-line="116" selection-start-column="47" selection-end-line="116" selection-end-column="47" />
               <folding>
-                <element signature="n#style#0;n#a#0;n#h6#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#h6#0;n#div#0;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#h6#0;n#div#1;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#h6#0;n#div#2;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#h4#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#h4#0;n#div#0;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#h4#0;n#div#1;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#h4#0;n#div#2;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soundscore/static/js/map.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1982" max-vertical-offset="2652">
+              <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#45#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -46,8 +58,18 @@
       <file leaf-file-name="stylish-portfolio.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soundscore/static/css/stylish-portfolio.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-47.653847" vertical-offset="2399" max-vertical-offset="5457">
-              <caret line="214" column="17" selection-start-line="214" selection-start-column="17" selection-end-line="214" selection-end-column="17" />
+            <state vertical-scroll-proportion="-8.423077" vertical-offset="4796" max-vertical-offset="5457">
+              <caret line="295" column="5" selection-start-line="295" selection-start-column="5" selection-end-line="295" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dc.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soundscore/static/css/dc.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.576923" vertical-offset="284" max-vertical-offset="5525">
+              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -105,16 +127,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dc.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soundscore/static/js/dc.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="26116" max-vertical-offset="148682">
-              <caret line="1563" column="11" selection-start-line="1563" selection-start-column="11" selection-end-line="1563" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="bootstrap.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soundscore/static/css/bootstrap.css">
           <provider selected="true" editor-type-id="text-editor">
@@ -162,7 +174,9 @@
         <option value="$PROJECT_DIR$/soundscore/static/js/colorbrewer.js" />
         <option value="$PROJECT_DIR$/datacanvas/urls.py" />
         <option value="$PROJECT_DIR$/soundscore/static/js/charts.js" />
+        <option value="$PROJECT_DIR$/soundscore/static/js/map.js" />
         <option value="$PROJECT_DIR$/soundscore/static/css/stylish-portfolio.css" />
+        <option value="$PROJECT_DIR$/soundscore/static/css/dc.css" />
         <option value="$PROJECT_DIR$/soundscore/templates/index.html" />
       </list>
     </option>
@@ -249,28 +263,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacanvas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacanvas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="soundscore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -886,14 +878,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soundscore/static/css/dc.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5491">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soundscore/static/img/sf-skyline.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1053,14 +1037,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soundscore/static/css/stylish-portfolio.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-47.653847" vertical-offset="2399" max-vertical-offset="5457">
-          <caret line="214" column="17" selection-start-line="214" selection-start-column="17" selection-end-line="214" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soundscore/static/js/charts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="44.53846" vertical-offset="5221" max-vertical-offset="8551">
@@ -1069,15 +1045,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/soundscore/static/js/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1982" max-vertical-offset="2652">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soundscore/static/css/stylish-portfolio.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.423077" vertical-offset="4796" max-vertical-offset="5457">
+          <caret line="295" column="5" selection-start-line="295" selection-start-column="5" selection-end-line="295" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soundscore/static/css/dc.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.576923" vertical-offset="284" max-vertical-offset="5525">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/soundscore/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5277778" vertical-offset="7074" max-vertical-offset="10523">
-          <caret line="434" column="13" selection-start-line="434" selection-start-column="13" selection-end-line="434" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.38387716" vertical-offset="1772" max-vertical-offset="7684">
+          <caret line="116" column="47" selection-start-line="116" selection-start-column="47" selection-end-line="116" selection-end-column="47" />
           <folding>
-            <element signature="n#style#0;n#a#0;n#h6#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#h6#0;n#div#0;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#h6#0;n#div#1;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#h6#0;n#div#2;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#h4#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#h4#0;n#div#0;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#h4#0;n#div#1;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#h4#0;n#div#2;n#div#2;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
