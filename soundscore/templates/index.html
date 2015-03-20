@@ -164,13 +164,13 @@
 {#              </div>#}
             </div>
 
-              <div class='row'>
-                <div class='col-md-12' id="chart-line-soundperhour">
-                  <h6> Average Sound by Hour
-                    <a class="reset" href="javascript:hoursChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                  </h6>
-                </div>
-              </div>
+{#              <div class='row'>#}
+{#                <div class='col-md-12' id="chart-line-soundperhour">#}
+{#                  <h6> Average Sound by Hour#}
+{#                    <a class="reset" href="javascript:hoursChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#                  </h6>#}
+{#                </div>#}
+{#              </div>#}
 
 {#              <div class='row'>#}
 {#                <div class='col-md-12' id="date-chart">#}
@@ -445,11 +445,13 @@
                     ]
                   },
                   "properties": {
-                    "title": "(" + data[i].sensor + ")",
+                      // todo newline
+                    "title": " Sensor ID: " + data[i].sensor + "\n" + "(" + data[i].longitude + " , " + data[i].latitude + ")",
+
                     "id": data[i].sensor,
-    {#                "marker-color": "#9c89cc",#}
+                    "marker-color": "#9c89cc",
     {#                "marker-color": "#000000",#}
-    {#                "marker-size": "small"#}
+                    "marker-size": "small",
                     "avg_sound": data[i].avg_sound
 
                   }

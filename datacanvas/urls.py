@@ -6,9 +6,9 @@ from soundscore import views
 urlpatterns = patterns('',
     # Examples:
     # url(r'^api/', include(router.urls)),
-    url(r'^$', 'soundscore.views.home', name='home'),
-    url(r'^dcjs/$', 'soundscore.views.dcjs', name='dcjs'),
-    url(r'^index/$', 'soundscore.views.index', name='index'),
+    url(r'^$', 'soundscore.views.index', name='index'),
+    # url(r'^dcjs/$', 'soundscore.views.dcjs', name='dcjs'),
+    # url(r'^index/$', 'soundscore.views.index', name='index'),
     # url(r'^blog/', include('blog.urls')),
 
     # todo split up api urls & views if things get unwieldy

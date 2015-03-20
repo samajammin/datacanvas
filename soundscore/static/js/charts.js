@@ -8,7 +8,7 @@ var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
 var hourRingChart   = dc.pieChart("#hour-ring-chart");
 var singleHourRingChart   = dc.pieChart("#singlehour-ring-chart");
 var datatable = dc.dataTable("#dc-data-table");
-var hoursChart  = dc.lineChart("#chart-line-soundperhour");
+//var hoursChart  = dc.lineChart("#chart-line-soundperhour");
 var hodChart = dc.barChart('#hod-chart');
 var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
@@ -381,28 +381,28 @@ d3.json("../static/js/newhours.json", function(data){
 
 
 <!-- todo get brush filter working -->
-    hoursChart
-        .width(1000).height(300)
-        .dimension(hourDim)
-        //.brushOn(true)
-        .group(hourAvg)
-        .x(d3.time.scale().domain([minHour,maxHour]))
-        .y(d3.scale.linear().domain([60, 90]))
-        //.compose([
-            //dc.lineChart(hoursChart).group(hourAvg, "Avg"),
-            //dc.lineChart(hoursChart).group(soundMax, "Max"),
-            //dc.lineChart(hoursChart).group(soundMin, "Min")
-//                    dc.lineChart(hoursChart).group(soundCount, "Count")
-//        ])
-        .legend(dc.legend().x(950).y(10).itemHeight(13).gap(5))
-            //                    todo elastic X doesn't work, I assume due to domain set to minHour/maxHour
-        .elasticX(true)
-        //.elasticY(true)
-        .yAxisLabel("Decibels");
-//                .xAxisLabel("Date");
-
-    //todo this type of chart must work differently with value (multiple lines)
-    hoursChart.valueAccessor(function(p) {return p.value.avg; });
+//    hoursChart
+//        .width(1000).height(300)
+//        .dimension(hourDim)
+//        //.brushOn(true)
+//        .group(hourAvg)
+//        .x(d3.time.scale().domain([minHour,maxHour]))
+//        .y(d3.scale.linear().domain([60, 90]))
+//        //.compose([
+//            //dc.lineChart(hoursChart).group(hourAvg, "Avg"),
+//            //dc.lineChart(hoursChart).group(soundMax, "Max"),
+//            //dc.lineChart(hoursChart).group(soundMin, "Min")
+////                    dc.lineChart(hoursChart).group(soundCount, "Count")
+////        ])
+//        .legend(dc.legend().x(950).y(10).itemHeight(13).gap(5))
+//            //                    todo elastic X doesn't work, I assume due to domain set to minHour/maxHour
+//        .elasticX(true)
+//        //.elasticY(true)
+//        .yAxisLabel("Decibels");
+////                .xAxisLabel("Date");
+//
+//    //todo this type of chart must work differently with value (multiple lines)
+//    hoursChart.valueAccessor(function(p) {return p.value.avg; });
 
 
     //#### Bubble Chart
@@ -415,7 +415,7 @@ d3.json("../static/js/newhours.json", function(data){
     sensorBubbleChart
         .width(1200) // (optional) define chart width, :default = 200
         .height(300)  // (optional) define chart height, :default = 200
-        .transitionDuration(5000) // (optional) define chart transition duration, :default = 750
+        .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
         .margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(sensorDim)
         //Bubble chart expect the groups are reduced to multiple values which would then be used
