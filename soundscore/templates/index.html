@@ -104,70 +104,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>All ma charts</h2>
+                    <h2>Explore Your Area</h2>
                 </div>
             </div>
-            <div class="row">
-{#              <div class='col-md-4' id="chart-ring-month">#}
-{#                <h6>Month Pie Chart#}
-{#                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#            <div class="row">#}
+
+{#              <div class='col-md-4' id="hod-chart">#}
+{#                <h6>Hour of Day#}
+{#                 <a class="reset" href="javascript:hodChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#                </h6>                  #}
+{#              </div>#}
+{##}
+{#              <div class='col-md-4' id="chart-ring-sensor">#}
+{#                <h6>Sensor Pie Chart#}
+{#                 <a class="reset" href="javascript:sensorRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
 {#                </h6>#}
-              <div class='col-md-4' id="hod-chart">
-                <h6>Hour of Day
-                 <a class="reset" href="javascript:hodChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>                  
-              </div>
+{#              </div>#}
+{#            </div>#}
 
-              <div class='col-md-4' id="chart-ring-sensor">
-                <h6>Sensor Pie Chart
-                 <a class="reset" href="javascript:sensorRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>
-              </div>
-
-              <div class='col-md-4' id="dow-chart">
-                <h6>DOW Bar Chart
-                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>
-              </div>
-            </div>
-
-
-            <div class="row">
-              <div class='col-md-4' id="chart-ring-month">
-                <h6>Month Pie Chart
-                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>
-              </div>
-
-              <div class='col-md-4' id="hour-ring-chart">
-                <h6>Sensor Pie Chart
-                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>
-              </div>
-
-              <div class='col-md-4' id="singlehour-ring-chart">
-                <h6>DOW Bar Chart
-                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                </h6>
-              </div>
-            </div>
-
-              <div class='row'>
-                <div class='col-md-12' id="chart-line-soundperhour">
-                  <h6> Total Sound by Hour
-                    <a class="reset" href="javascript:hoursChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                  </h6>
-                </div>
-              </div>
-
-              <div class='row'>
-                <div class='col-md-12' id="date-chart">
-                  <h6> Total Sound by Day
-                    <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
-                  </h6>
-                </div>
-              </div>
-            <!-- /.row -->
               <div class='row'>
                 <div class='col-md-12' id="sensor-bubble-chart">
                   <h6> Sound by Sensor
@@ -175,6 +129,56 @@
                   </h6>
                 </div>
               </div>
+            <!-- /.row -->
+
+            <div class="row">
+
+{#              <div class='col-md-4' id="chart-ring-month">#}
+{#                <h6>Month Pie Chart#}
+{#                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#                </h6>#}
+{#              </div>#}
+              <div class='col-md-3' id="hour-ring-chart">
+                <h6>Sensor Pie Chart
+                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+                <div class='col-md-6 text-center' id="date-chart">
+                  <h6> Average Sound by Day
+                    <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                  </h6>
+                </div>
+
+              <div class='col-md-3' id="dow-chart">
+                <h6>DOW Bar Chart
+                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                </h6>
+              </div>
+
+
+{#              <div class='col-md-4' id="singlehour-ring-chart">#}
+{#                <h6>DOW Bar Chart#}
+{#                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#                </h6>#}
+{#              </div>#}
+            </div>
+
+              <div class='row'>
+                <div class='col-md-12' id="chart-line-soundperhour">
+                  <h6> Average Sound by Hour
+                    <a class="reset" href="javascript:hoursChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                  </h6>
+                </div>
+              </div>
+
+{#              <div class='row'>#}
+{#                <div class='col-md-12' id="date-chart">#}
+{#                  <h6> Average Sound by Day#}
+{#                    <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
+{#                  </h6>#}
+{#                </div>#}
+{#              </div>#}
             <!-- /.row -->
 
         </div>
@@ -186,8 +190,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Decibels? What are we talking about here?</h2>
-                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">
+{#                    <h2>Decibels? What are we talking about here?</h2>#}
+{#                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">#}
+                    <img src="../static/img/Decible-Infographic.png">
                 </div>
 {#                <div class="col-lg-6 text-center">#}
 {#                    <h2>Decibels? What are we talking about here?</h2>#}
@@ -494,20 +499,20 @@
                 }
             });
 
-        {#        standard markers#}
-        {#        var sensorLayer = L.mapbox.featureLayer().addTo(map);#}
-        {#        sensorLayer.setGeoJSON(geojson);#}
+{#                standard markers#}
+                var sensorLayer = L.mapbox.featureLayer().addTo(map);
+                sensorLayer.setGeoJSON(gjson);
 
 
         {#        circle markers #}
-            var sensorLayer = L.geoJson(gjson, {
-                pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, {
-                        radius: feature.properties.avg_sound / 5,
+{#            var sensorLayer = L.geoJson(gjson, {#}
+{#                pointToLayer: function(feature, latlng) {#}
+{#                    return L.circleMarker(latlng, {#}
+{#                        radius: feature.properties.avg_sound / 5,#}
 {#                        fill: black;#}
-                    })
-                }
-            }).addTo(map);
+{#                    })#}
+{#                }#}
+{#            }).addTo(map);#}
 
         {#    sensorLayer.on('click', function(e) {#}
         {#        map.panTo(e.layer.getLatLng());#}

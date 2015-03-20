@@ -102,6 +102,7 @@ d3.json("../static/js/newhours.json", function(data){
     <!-- todo clean up dimensions, all in one place & only the ones we need -->
 
     var numberFormat = d3.format('.2f');
+    //var numberFormatZero = d3.format('f');
     var parseHour = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
     api_data.forEach(function(d) {
         d.hour = parseHour(d.hour);
@@ -127,21 +128,29 @@ d3.json("../static/js/newhours.json", function(data){
     var hourGroupDim = cf.dimension(function (d) {
         var hr = d.hod;
         if (hr <= 2) {
-            return '12AM - 3AM';
+            //return '12AM - 3AM';
+            return 0
         } else if (hr > 2 && hr <= 5) {
-            return '3AM - 6AM';
+            //return '3AM - 6AM';
+            return 1
         } else if (hr > 5 && hr <= 8) {
-            return '6AM - 9AM';
+            //return '6AM - 9AM';
+            return 2
         } else if (hr > 8 && hr <= 11) {
-            return '9AM - 12PM';
+            //return '9AM - 12PM';
+            return 3
         } else if (hr > 11 && hr <= 14) {
-            return '12PM - 3PM';
+            //return '12PM - 3PM';
+            return 4
         } else if (hr > 14 && hr <= 17) {
-            return '3PM - 6PM';
+            //return '3PM - 6PM';
+            return 5
         } else if (hr > 17 && hr <= 20) {
-            return '6PM - 9PM';
+            //return '6PM - 9PM';
+            return 6
         } else {
-            return '9PM - 12PM';
+            //return '9PM - 12PM';
+            return 7
         }
     });
 
@@ -165,6 +174,7 @@ d3.json("../static/js/newhours.json", function(data){
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     var monthOfYear = ["Jan", "Feb", "March", "April"];
+    var hodBuckets = ["12AM - 3AM","3AM - 6AM","6AM - 9AM","9AM - 12PM","12PM - 3PM","3PM - 6PM","6PM - 9PM", "9PM - 12PM"];
 
 //            count of this should be 969, not 12... right?
     var sound = hourDim.group().reduceSum(function(d) {return d.sound_avg;});
@@ -189,13 +199,20 @@ d3.json("../static/js/newhours.json", function(data){
           .label(function (d) {
               return dayOfWeekNames[d.key];
           })
-          .title(function (d) {
-              return d.value;
-          })
+            .colors(colorbrewer.SdSc[5])
+            .colorDomain([74, 76])
+            .renderTitle(true)
+            .title(function (p) {
+                return 'Average Noise: ' + numberFormat(p.value.avg) + ' dB';
+            })
+            .labelOffsetX(2100)
+            .colorAccessor(function(d, i){return d.value.avg;})
+            //had to hack around to get xaxis scale to work:
+            //https://groups.google.com/forum/#!topic/dc-js-user-group/zg_MgogXs2Y
+            .x(d3.scale.linear().range([0,300]).domain([70,80]))
 
           //.elasticX(true)
-          //.x(d3.scale.linear().domain([0, 90]))
-          .xAxis().ticks(4);
+          .xAxis().ticks(5);
 
     dowChart.valueAccessor(function(p) {return p.value.avg; });
 
@@ -219,26 +236,33 @@ d3.json("../static/js/newhours.json", function(data){
         .group(sensorDim.group())
         .innerRadius(60);
 
+
+    //todo order slices
     hourRingChart
         .width(300).height(300)
-        .dimension(hourGroupDim.group())
+        .dimension(hourGroupDim)
         .group(hourGroup)
         .innerRadius(30)
-        .colors(colorbrewer.RdBu[8])
-        //.colors(['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#dadaeb'])
-        // (optional) define color domain to match your data domain if you want to bind data or color
+        //.colors(colorbrewer.RdBu[8])
+        .colors(colorbrewer.SdSc[5])
         .colorDomain([74, 76])
-        .renderTitle(true) // (optional) whether chart should render titles, :default = false
+        .label(function (d) {
+              return hodBuckets[d.key];
+          })
+        .renderTitle(true)
         .title(function (p) {
             return [
                 p.key,
                 'Average Noise: ' + numberFormat(p.value.avg) + ' dB'
             ].join('\n');
         })
-        // (optional) define color value accessor
+        //.order(d3.ascending)
         .colorAccessor(function(d, i){return d.value.avg;});
 
+
+
     hourRingChart.valueAccessor(function(p) {return p.value.avg; });
+    //hourRingChart.sort(d3.ascending);
 
     singleHourRingChart
         .width(300).height(300)
@@ -289,7 +313,7 @@ d3.json("../static/js/newhours.json", function(data){
 
 
     dateBarChart
-        .width(1000).height(300)
+        .width(600).height(300)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(dateDim)
         .group(dateAvg)
@@ -302,6 +326,7 @@ d3.json("../static/js/newhours.json", function(data){
         //.legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
         //.elasticY(true)
         .gap(3)
+        .colors(["#424242"])
         .yAxisLabel("Decibels");
 
     dateBarChart.valueAccessor(function(p) {return p.value.avg; });
@@ -359,7 +384,7 @@ d3.json("../static/js/newhours.json", function(data){
     hoursChart
         .width(1000).height(300)
         .dimension(hourDim)
-        .brushOn(true)
+        //.brushOn(true)
         .group(hourAvg)
         .x(d3.time.scale().domain([minHour,maxHour]))
         .y(d3.scale.linear().domain([60, 90]))
@@ -388,17 +413,18 @@ d3.json("../static/js/newhours.json", function(data){
     /* dc.bubbleChart('#yearly-bubble-chart', 'chartGroup') */
     //    todo figure out .colr/ key /value accessors
     sensorBubbleChart
-        .width(990) // (optional) define chart width, :default = 200
-        .height(250)  // (optional) define chart height, :default = 200
-        .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
+        .width(1200) // (optional) define chart width, :default = 200
+        .height(300)  // (optional) define chart height, :default = 200
+        .transitionDuration(5000) // (optional) define chart transition duration, :default = 750
         .margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(sensorDim)
         //Bubble chart expect the groups are reduced to multiple values which would then be used
         //to generate x, y, and radius for each key (bubble) in the group
         .group(sensorAvg)
-        .colors(colorbrewer.RdYlGn[9]) // (optional) define color function or array for bubbles
-        .colorDomain([40, 90]) //(optional) define color domain to match your data domain if you want to bind data or
-                                  //color
+        //.colors(colorbrewer.RdYlGn[9]) // (optional) define color function or array for bubbles
+        //.colorDomain([70, 90]) //(optional) define color domain to match your data domain if you want to bind data or
+        .colors(colorbrewer.SdSc[5]) // (optional) define color function or array for bubbles
+        .colorDomain([70, 90]) //(optional) define color domain to match your data domain if you want to bind data or
         //##### Accessors
         //Accessor functions are applied to each value returned by the grouping
         //
@@ -420,13 +446,9 @@ d3.json("../static/js/newhours.json", function(data){
             return p.value.count/2;
         })
         .maxBubbleRelativeSize(0.3)
-        .x(d3.scale.linear().domain([40, 90]))
+        .x(d3.scale.linear().domain([70, 90]))
         .y(d3.scale.linear().domain([40, 70]))
         .r(d3.scale.linear().domain([0, 4000]))
-        //##### Elastic Scaling
-        //`.elasticX` and `.elasticX` determine whether the chart should rescale each axis to fit data.
-        //The `.yAxisPadding` and `.xAxisPadding` add padding to data above and below their max values in the same unit
-        //domains as the Accessors.
         //.elasticY(true)
         //.elasticX(true)
         .yAxisPadding(100)
@@ -435,8 +457,6 @@ d3.json("../static/js/newhours.json", function(data){
         .renderVerticalGridLines(true) // (optional) render vertical grid lines, :default=false
         .xAxisLabel('Average Noise Level') // (optional) render an axis label below the x axis
         .yAxisLabel('Noise STD') // (optional) render a vertical axis lable left of the y axis
-        //#### Labels and  Titles
-        //Labels are displaed on the chart for each bubble. Titles displayed on mouseover.
         .renderLabel(true) // (optional) whether chart should render labels, :default = true
         .label(function (p) {
             return p.key;
@@ -447,12 +467,9 @@ d3.json("../static/js/newhours.json", function(data){
                 'Sensor: ' + p.key,
                 'Average Noise: ' + numberFormat(p.value.avg) + ' dB',
                 'Noise STD: ' + numberFormat(p.value.std_avg),
-                'Total Measurements' + numberFormat(p.value.count)
+                'Total Measurements: ' + numberFormat(p.value.count)
             ].join('\n');
         })
-        //#### Customize Axis
-        //Set a custom tick format. Note `.yAxis()` returns an axis object, so any additional method chaining applies
-        //to the axis, not the chart.
         .yAxis()
             .tickFormat(function (v) {
             return v;
@@ -462,5 +479,20 @@ d3.json("../static/js/newhours.json", function(data){
 
 
     dc.renderAll();
+
+    // todo filter on map clicks
+    $('.leaflet-clickable').on('click', function(){
+        var minDate = tripsByDateDimension.top(5)[4].startDate;
+        var maxDate = tripsByDateDimension.top(5)[0].startDate;
+        console.log(tripVolume.filters());
+
+
+        tripVolume.filter([minDate, maxDate]);
+        tripVolume.x(d3.time.scale().domain([minDate,maxDate]));
+
+        console.log(tripVolume.filters());
+
+        dc.redrawAll()
+    });
 
 });

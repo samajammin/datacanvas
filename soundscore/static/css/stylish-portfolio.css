@@ -267,6 +267,10 @@ footer {
     padding: 100px 0;
 }
 
+#decibels {
+    background-color: #424242;
+}
+
 /*path {*/
     /*fill: red;*/
     /*stroke: black;*/
