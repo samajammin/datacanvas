@@ -3,26 +3,23 @@
  */
 
 var dowChart = dc.rowChart("#dow-chart");
-var monthRingChart   = dc.pieChart("#chart-ring-month");
-var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
-var hourRingChart   = dc.pieChart("#hour-ring-chart");
-var singleHourRingChart   = dc.pieChart("#singlehour-ring-chart");
-var datatable = dc.dataTable("#dc-data-table");
+//var monthRingChart   = dc.pieChart("#chart-ring-month");
+//var sensorRingChart   = dc.pieChart("#chart-ring-sensor");
+var hourPie = dc.pieChart("#hour-pie");
+//var singleHourRingChart   = dc.pieChart("#singlehour-ring-chart");
+//var datatable = dc.dataTable("#dc-data-table");
 //var hoursChart  = dc.lineChart("#chart-line-soundperhour");
-var hodChart = dc.barChart('#hod-chart');
+//var hodChart = dc.barChart('#hod-chart');
 var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
 
-console.log($( "#dow-chart" ).width());
-console.log($( "#dow-chart" ).height());
-console.log($( "#dow-chart" ).height());
+console.log($(window).width());
 
-//        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
 //d3.json("../static/js/newhours.json", function(data){
 d3.json("/api/hours/?count=10000", function(data){
     var api_data = data['results'];
-            console.log('hour results received')
-            console.log(api_data.length);
+            //console.log('hour results received')
+            //console.log(api_data.length);
 //            console.log(api_data);
 
 //        sample data object from the api_data array
@@ -40,8 +37,7 @@ d3.json("/api/hours/?count=10000", function(data){
 
     var cf = crossfilter(api_data);
 
-
-    //reduce functions for custom attributes
+    //custom reduce functions for avg attributes
     function reduceAddAvg(att) {
         return function(p, v) {
             ++p.count;
@@ -104,8 +100,6 @@ d3.json("/api/hours/?count=10000", function(data){
     }
 
 
-    <!-- todo clean up dimensions, all in one place & only the ones we need -->
-
     var numberFormat = d3.format('.2f');
     //var numberFormatZero = d3.format('f');
     var parseHour = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
@@ -123,6 +117,7 @@ d3.json("/api/hours/?count=10000", function(data){
     //console.log(february);
     //console.log(d3.time.month(february));
 
+    <!-- todo clean up dimensions, all in one place & only the ones we need -->
     var sensorDim = cf.dimension(function(d) { return d.sensor; });
     var hourDim = cf.dimension(function(d) { return d.hour;});
     var monthDim  = cf.dimension(function(d) {return d.month;});
@@ -133,28 +128,20 @@ d3.json("/api/hours/?count=10000", function(data){
     var hourGroupDim = cf.dimension(function (d) {
         var hr = d.hod;
         if (hr <= 2) {
-            //return '12AM - 3AM';
             return 0
         } else if (hr > 2 && hr <= 5) {
-            //return '3AM - 6AM';
             return 1
         } else if (hr > 5 && hr <= 8) {
-            //return '6AM - 9AM';
             return 2
         } else if (hr > 8 && hr <= 11) {
-            //return '9AM - 12PM';
             return 3
         } else if (hr > 11 && hr <= 14) {
-            //return '12PM - 3PM';
             return 4
         } else if (hr > 14 && hr <= 17) {
-            //return '3PM - 6PM';
             return 5
         } else if (hr > 17 && hr <= 20) {
-            //return '6PM - 9PM';
             return 6
         } else {
-            //return '9PM - 12PM';
             return 7
         }
     });
@@ -168,7 +155,7 @@ d3.json("/api/hours/?count=10000", function(data){
     var dowAvg = dowDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     var hodAvg = hodDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     var dateAvg = dateDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
-    var hourAvg = hourDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
+    //var hourAvg = hourDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     var sensorAvg = sensorDim.group().reduce(reduceAdd, reduceRemove, reduceInitial);
     //var hourGroup = hourGroupDim.group().reduce(reduceAddAvg('sound_avg'), reduceRemoveAvg('sound_avg'), reduceInitialAvg);
     //var hourGroup = hourGroupDim.group().reduceCount(function(d) {return d.sound_avg;});
@@ -178,25 +165,25 @@ d3.json("/api/hours/?count=10000", function(data){
     //console.log(hourGroup.all());
 
     var dayOfWeekNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-    var monthOfYear = ["Jan", "Feb", "March", "April"];
+    //var monthOfYear = ["Jan", "Feb", "March", "April"];
     var hodBuckets = ["12AM - 3AM","3AM - 6AM","6AM - 9AM","9AM - 12PM","12PM - 3PM","3PM - 6PM","6PM - 9PM", "9PM - 12PM"];
 
 //            count of this should be 969, not 12... right?
-    var sound = hourDim.group().reduceSum(function(d) {return d.sound_avg;});
-    var soundMax = hourDim.group().reduceSum(function(d) {return d.sound_max;});
-    var soundMin = hourDim.group().reduceSum(function(d) {return d.sound_min;});
-    var soundCount = hourDim.group().reduceSum(function(d) {return d.sound_count;});
-    var minHour = hourDim.bottom(1)[0].hour;
-    var maxHour = hourDim.top(1)[0].hour;
+//    var sound = hourDim.group().reduceSum(function(d) {return d.sound_avg;});
+//    var soundMax = hourDim.group().reduceSum(function(d) {return d.sound_max;});
+//    var soundMin = hourDim.group().reduceSum(function(d) {return d.sound_min;});
+//    var soundCount = hourDim.group().reduceSum(function(d) {return d.sound_count;});
+//    var minHour = hourDim.bottom(1)[0].hour;
+//    var maxHour = hourDim.top(1)[0].hour;
     //var minMonth = monthDim.bottom(1)[0].month;
     //var maxMonth = monthDim.top(1)[0].month;
     var minDate = dateDim.bottom(1)[0].date;
     var maxDate = dateDim.top(1)[0].date;
 
-    var sensorTotal = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
+    //var sensorTotal = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
 
     dowChart
-          .width($( "#dow-chart" ).width())
+          .width($( "#dow-chart-col" ).width())
           //.height($( "#dow-chart" ).height())
           .height(300)
           .margins({top: 10, left: 20, right: 10, bottom: 20})
@@ -223,31 +210,25 @@ d3.json("/api/hours/?count=10000", function(data){
 
     dowChart.valueAccessor(function(p) {return p.value.avg; });
 
+    //monthRingChart
+    //    .width(300).height(300)
+    //    .dimension(monthDim)
+    //    .group(monthDim.group())
+    //    .label(function (d) {
+    //      return monthOfYear[d.key];
+    //    })
+    //    .innerRadius(30);
+    //
+    //sensorRingChart
+    //    .width(300).height(300)
+    //    .dimension(sensorDim)
+    //    .group(sensorDim.group())
+    //    .innerRadius(60);
 
 
-
-    monthRingChart
-        .width(300).height(300)
-        .dimension(monthDim)
-        .group(monthDim.group())
-        .label(function (d) {
-          return monthOfYear[d.key];
-        })
-        .innerRadius(30);
-
-
-
-    sensorRingChart
-        .width(300).height(300)
-        .dimension(sensorDim)
-        .group(sensorDim.group())
-        .innerRadius(60);
-
-
-    //todo order slices
-    hourRingChart
+    hourPie
         //.width(275)
-        .width($( "#hour-ring-chart" ).width())
+        .width($( "#hour-pie-col" ).width())
         .height(300)
         .dimension(hourGroupDim)
         .group(hourGroup)
@@ -270,30 +251,30 @@ d3.json("/api/hours/?count=10000", function(data){
 
 
 
-    hourRingChart.valueAccessor(function(p) {return p.value.avg; });
-    //hourRingChart.sort(d3.ascending);
+    hourPie.valueAccessor(function(p) {return p.value.avg; });
+    //hourPie.sort(d3.ascending);
 
-    singleHourRingChart
-        .width(300).height(300)
-        .dimension(hodDim.group())
-        .group(hodGroup)
-        .innerRadius(30)
-        .colors(colorbrewer.RdBu[8])
-        //.colors(['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#dadaeb'])
-        // (optional) define color domain to match your data domain if you want to bind data or color
-        .colorDomain([74, 76])
-        .renderTitle(true) // (optional) whether chart should render titles, :default = false
-        .renderLabel(true)
-        .title(function (p) {
-            return [
-                p.key,
-                'Average Noise: ' + numberFormat(p.value.avg) + ' dB'
-            ].join('\n');
-        })
-        // (optional) define color value accessor
-        .colorAccessor(function(d, i){return d.value.avg;});
-
-    singleHourRingChart.valueAccessor(function(p) {return p.value.avg; });
+    //singleHourRingChart
+    //    .width(300).height(300)
+    //    .dimension(hodDim.group())
+    //    .group(hodGroup)
+    //    .innerRadius(30)
+    //    .colors(colorbrewer.RdBu[8])
+    //    //.colors(['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#dadaeb'])
+    //    // (optional) define color domain to match your data domain if you want to bind data or color
+    //    .colorDomain([74, 76])
+    //    .renderTitle(true) // (optional) whether chart should render titles, :default = false
+    //    .renderLabel(true)
+    //    .title(function (p) {
+    //        return [
+    //            p.key,
+    //            'Average Noise: ' + numberFormat(p.value.avg) + ' dB'
+    //        ].join('\n');
+    //    })
+    //    // (optional) define color value accessor
+    //    .colorAccessor(function(d, i){return d.value.avg;});
+    //
+    //singleHourRingChart.valueAccessor(function(p) {return p.value.avg; });
 
 
     //#### Bar Chart
@@ -302,28 +283,28 @@ d3.json("/api/hours/?count=10000", function(data){
     // to a specific group then any interaction with such chart will only trigger redraw
     // on other charts within the same chart group.
     /* dc.barChart('#volume-month-chart') */
-    hodChart
-        .width(300)
-        .height(300)
-        .margins({top: 10, right: 50, bottom: 30, left: 40})
-        .dimension(hodDim)
-        .group(hodAvg)
-        .elasticY(true)
-        //.y(d3.scale.linear().domain([60, 90]))
-        // (optional) set gap between bars manually in px, :default=2
-        .gap(1)
-        // (optional) set filter brush rounding
-        .round(dc.round.floor)
-        .alwaysUseRounding(true)
-        .x(d3.scale.linear().domain([0, 23]))
-        .renderHorizontalGridLines(true);
-
-    hodChart.valueAccessor(function(p) {return p.value.avg; });
+    //hodChart
+    //    .width(300)
+    //    .height(300)
+    //    .margins({top: 10, right: 50, bottom: 30, left: 40})
+    //    .dimension(hodDim)
+    //    .group(hodAvg)
+    //    .elasticY(true)
+    //    //.y(d3.scale.linear().domain([60, 90]))
+    //    // (optional) set gap between bars manually in px, :default=2
+    //    .gap(1)
+    //    // (optional) set filter brush rounding
+    //    .round(dc.round.floor)
+    //    .alwaysUseRounding(true)
+    //    .x(d3.scale.linear().domain([0, 23]))
+    //    .renderHorizontalGridLines(true);
+    //
+    //hodChart.valueAccessor(function(p) {return p.value.avg; });
 
 
     dateBarChart
         //.width(600)
-        .width($( "#date-chart" ).width())
+        .width($( "#date-chart-col" ).width())
         .height(300)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(dateDim)
@@ -374,17 +355,17 @@ d3.json("/api/hours/?count=10000", function(data){
 
 
 
-    datatable
-        .dimension(hourDim)
-        .group(function(d) {return d.hour;})
-        // dynamic columns creation using an array of closures
-        .columns([
-            function(d) {return d.hour;},
-            function(d) {return d.sound_avg;},
-            function(d) {return d.sound_max;},
-            function(d) {return d.sound_min;},
-            function(d) {return d.sound_count;}
-        ]);
+    //datatable
+    //    .dimension(hourDim)
+    //    .group(function(d) {return d.hour;})
+    //    // dynamic columns creation using an array of closures
+    //    .columns([
+    //        function(d) {return d.hour;},
+    //        function(d) {return d.sound_avg;},
+    //        function(d) {return d.sound_max;},
+    //        function(d) {return d.sound_min;},
+    //        function(d) {return d.sound_count;}
+    //    ]);
 
 
 
@@ -468,7 +449,7 @@ d3.json("/api/hours/?count=10000", function(data){
         .renderHorizontalGridLines(true) // (optional) render horizontal grid lines, :default=false
         .renderVerticalGridLines(true) // (optional) render vertical grid lines, :default=false
         .xAxisLabel('Average Noise Level') // (optional) render an axis label below the x axis
-        .yAxisLabel('Noise STD') // (optional) render a vertical axis lable left of the y axis
+        .yAxisLabel('Noise SD') // (optional) render a vertical axis lable left of the y axis
         .renderLabel(true) // (optional) whether chart should render labels, :default = true
         .label(function (p) {
             return p.key;
@@ -493,18 +474,23 @@ d3.json("/api/hours/?count=10000", function(data){
     dc.renderAll();
 
     // todo filter on map clicks
-    $('.leaflet-clickable').on('click', function(){
-        var minDate = tripsByDateDimension.top(5)[4].startDate;
-        var maxDate = tripsByDateDimension.top(5)[0].startDate;
-        console.log(tripVolume.filters());
+    $('.leaflet-marker-icon').on('click', function(e){
+        console.log(e);
+        console.log(parseInt(e.target.attributes.title.nodeValue));
+        var sensorClicked = parseInt(e.target.attributes.title.nodeValue)
+        sensorBubbleChart.filterAll();
+        sensorBubbleChart.filter(sensorClicked);
+        dc.redrawAll();
+        //var minDate = tripsByDateDimension.top(5)[4].startDate;
+        //var maxDate = tripsByDateDimension.top(5)[0].startDate;
+        //console.log(tripVolume.filters());
+        //
+        //
+        //tripVolume.filter([minDate, maxDate]);
+        //tripVolume.x(d3.time.scale().domain([minDate,maxDate]));
+        //
+        //console.log(tripVolume.filters());
 
-
-        tripVolume.filter([minDate, maxDate]);
-        tripVolume.x(d3.time.scale().domain([minDate,maxDate]));
-
-        console.log(tripVolume.filters());
-
-        dc.redrawAll()
     });
 
 });

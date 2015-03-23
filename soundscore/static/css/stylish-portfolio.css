@@ -139,7 +139,7 @@ hr.small {
 
 .header {
     /*display: table;*/
-    /*position: relative;*/
+    position: relative;
     width: 100%;
     height: 100%;
     background: url(../img/sf-skyline.jpg) no-repeat center center scroll;
@@ -159,6 +159,8 @@ hr.small {
     width: 100%;
     height: 100%;
     z-index: 2;
+    padding-right: 0;
+    padding-left: 0;
     /*position: relative;*/
 }
 
@@ -293,10 +295,10 @@ footer {
     /*display: table-cell;*/
     text-align: center;
     vertical-align: middle;
-    /*position: relative;*/
+    position: relative;
     top: 40%;
-    /*align-content: center;*/
-    /*align-items: center;*/
+    align-content: center;
+    align-items: center;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -306,7 +308,7 @@ footer {
 .text-vertical-center h1 {
     margin: 0;
     padding: 0;
-    font-size: 3em;
+    font-size: 4em;
     font-weight: 700;
     color: white;
 }
@@ -318,7 +320,7 @@ footer {
 /*html { font-size: 62.5%; }*/
 /*body { font-size: 1em;}*/
 
-@media (max-width: 400px) {
+@media (max-width: 700px) {
     /*html { font-size: 70%; }*/
     /*.text-vertical-center h1 { font-size: 5em; }*/
     img {width: 100%;}

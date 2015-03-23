@@ -55,9 +55,10 @@
                   },
                   "properties": {
                       // todo newline
-                    "title": "SensorID: #" + data[i].sensor + ", \n"
+                    "title": data[i].sensor,
+                            //"SensorID: #" + data[i].sensor + ", \n"
                             //+ "Location: (" + data[i].longitude + " , " + data[i].latitude + ") + \n"
-                            + "SoundScore: " + getScore(data[i].avg_sound)[0] + "\n",
+                            //+ "SoundScore: " + getScore(data[i].avg_sound)[0] + "\n",
                     "id": data[i].sensor,
 //                    "marker-color": "#9c89cc",
                     "marker-color": getScore(data[i].avg_sound)[1],
@@ -70,13 +71,13 @@
             }
 
             sensorLayer.setGeoJSON(gjson);
-            sensorLayer.on('mouseover', function(e) {
-                e.layer.openPopup();
-            });
-            sensorLayer.on('mouseout', function(e) {
-                e.layer.closePopup();
-            });
 
+            //sensorLayer.on('mouseover', function(e) {
+            //    e.layer.openPopup();
+            //});
+            //sensorLayer.on('mouseout', function(e) {
+            //    e.layer.closePopup();
+            //});
 
 //                circle markers
 //            var sensorLayer = L.geoJson(gjson, {
@@ -88,7 +89,7 @@
 //                }
 //            }).addTo(map);
 
-            map.legendControl.addLegend('<h2><strong>Sensors of San Francisco</strong></h2></br><h6>Filter By SoundScore:</h6><ul id="filters" class="filter-ui list-inline"></ul>');
+            map.legendControl.addLegend('<h6>Filter By SoundScore:</h6><ul id="filters" class="filter-ui list-inline"></ul>');
 
             map.fitBounds(sensorLayer.getBounds());
 
@@ -102,6 +103,7 @@
             if (map.tap) map.tap.disable();
 
 
+            // todo add img filters & color scale
             // filter markers
             var filters = document.getElementById('filters');
               var typesObj = {}, types = [1,2,3,4,5];

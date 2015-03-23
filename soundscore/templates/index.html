@@ -35,15 +35,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-    <style>
-
-    </style>
 </head>
 
 <body>
-
     <!-- Navigation -->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
@@ -69,15 +63,18 @@
         <div class="container-fluid">
     {#    <div class="container">#}
             <div class="row">
-                <div id="tint">
-                    <header id="top" class="header">
-                        <div class="text-vertical-center col-sm-12 col-md-12 col-lg-12">
-                            <h1>SoundScore</h1>
-                            <h3><i>See What You Hear</i></h3>
-                            <br>
-                            <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
-                        </div>
-                    </header>
+                <div class="col-xs-12 col-md-12 col-lg-12" id="tint">
+    {#                todo tint#}
+{#                    <div id="tint">#}
+                        <header id="top" class="header">
+                            <div class="text-vertical-center">
+                                <h1>SoundScore</h1>
+                                <h3><i>See What You Hear</i></h3>
+                                <br>
+                                <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
+                        </header>
+{#                    </div>#}
+                    </div>
                 </div>
             <!-- Row -->
             </div>
@@ -101,7 +98,7 @@
 
    <!-- Charts -->
     <section id="charts" class="charts">
-        <div class="container-fluid">
+        <div class="container">
 {#            <div class="row">#}
 {#                <div class="col-lg-12 text-center">#}
 {#                    <h2>Listen Closely, Ya Hear?! Explore Your Area:</h2>#}
@@ -123,7 +120,7 @@
 {#            </div>#}
 
               <div class='row'>
-                <div class='col-md-12 col-sm-12' id="bubble-chart-col">
+                <div class='col-md-12 col-xs-12' id="bubble-chart-col">
                   <h4> <strong>Sound by Sensor</strong>
                     <a class="reset" href="javascript:sensorBubbleChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                   </h4>
@@ -140,22 +137,26 @@
 {#                </h6>#}
 {#              </div>#}
 
-              <div class='col-md-3 col-sm-12 text-center' id="dow-chart">
+              <div class='col-md-3 col-xs-12 text-center' id="dow-chart-col">
                 <h4> <strong>Sound by Day of Week</strong>
                  <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                 </h4>
+{#                  todo center charts#}
+                  <div id="dow-chart"></div>
               </div>
 
-                <div class= 'col-md-6 col-sm-12 text-center' id="date-chart">
+                <div class= 'col-md-6 col-xs-12 text-center' id="date-chart-col">
                   <h4> <strong>Sound by Day</strong>
                     <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                   </h4>
+                    <div id="date-chart"></div>
                 </div>
 
-              <div class='col-md-3 col-sm-12 text-center' id="hour-ring-chart">
+              <div class='col-md-3 col-xs-12 text-center' id="hour-pie-col">
                 <h4> <strong>Sound By Hour of Day</strong>
-                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+                 <a class="reset" href="javascript:hourPie.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                 </h4>
+                  <div id="hour-pie"></div>
               </div>
 
 
@@ -193,7 +194,7 @@
     <section id="decibels" class="decibels">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12 col-sm-12 text-center">
+                <div class="col-lg-12 col-xs-12 text-center">
 {#                    <h2>Decibels? What are we talking about here?</h2>#}
 {#                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">#}
                     <img src="../static/img/Decible-Infographic.png">
@@ -218,7 +219,7 @@
 {#                    <h2>About the Project</h2>#}
 {#                    <hr class="small">#}
 {#                    <div class="row">#}
-{#                        <div class="col-md-3 col-sm-6">#}
+{#                        <div class="col-md-3 col-xs-6">#}
 {#                            <div class="service-item">#}
 {#                                <span class="fa-stack fa-4x">#}
 {#                                <i class="fa fa-circle fa-stack-2x"></i>#}
@@ -231,7 +232,7 @@
 {#                                <a href="#" class="btn btn-light">Learn More</a>#}
 {#                            </div>#}
 {#                        </div>#}
-{#                        <div class="col-md-3 col-sm-6">#}
+{#                        <div class="col-md-3 col-xs-6">#}
 {#                            <div class="service-item">#}
 {#                                <span class="fa-stack fa-4x">#}
 {#                                <i class="fa fa-circle fa-stack-2x"></i>#}
@@ -244,7 +245,7 @@
 {#                                <a href="#" class="btn btn-light">Learn More</a>#}
 {#                            </div>#}
 {#                        </div>#}
-{#                        <div class="col-md-3 col-sm-6">#}
+{#                        <div class="col-md-3 col-xs-6">#}
 {#                            <div class="service-item">#}
 {#                                <span class="fa-stack fa-4x">#}
 {#                                <i class="fa fa-circle fa-stack-2x"></i>#}
@@ -257,7 +258,7 @@
 {#                                <a href="#" class="btn btn-light">Learn More</a>#}
 {#                            </div>#}
 {#                        </div>#}
-{#                        <div class="col-md-3 col-sm-6">#}
+{#                        <div class="col-md-3 col-xs-6">#}
 {#                            <div class="service-item">#}
 {#                                <span class="fa-stack fa-4x">#}
 {#                                <i class="fa fa-circle fa-stack-2x"></i>#}
