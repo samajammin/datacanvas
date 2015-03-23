@@ -13,6 +13,10 @@ var hodChart = dc.barChart('#hod-chart');
 var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
 
+console.log($( "#dow-chart" ).width());
+console.log($( "#dow-chart" ).height());
+console.log($( "#dow-chart" ).height());
+
 //        d3.json("http://127.0.0.1:8000/api/measurements/?count=923", function(data){
 //d3.json("../static/js/newhours.json", function(data){
 d3.json("/api/hours/?count=10000", function(data){
@@ -192,7 +196,9 @@ d3.json("/api/hours/?count=10000", function(data){
     var sensorTotal = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
 
     dowChart
-          .width(250).height(300)
+          .width($( "#dow-chart" ).width())
+          //.height($( "#dow-chart" ).height())
+          .height(300)
           .margins({top: 10, left: 20, right: 10, bottom: 20})
 //              .group(dowDim.group())
           .group(dowAvg)
@@ -240,7 +246,9 @@ d3.json("/api/hours/?count=10000", function(data){
 
     //todo order slices
     hourRingChart
-        .width(275).height(300)
+        //.width(275)
+        .width($( "#hour-ring-chart" ).width())
+        .height(300)
         .dimension(hourGroupDim)
         .group(hourGroup)
         .innerRadius(30)
@@ -314,7 +322,9 @@ d3.json("/api/hours/?count=10000", function(data){
 
 
     dateBarChart
-        .width(600).height(300)
+        //.width(600)
+        .width($( "#date-chart" ).width())
+        .height(300)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
         .dimension(dateDim)
         .group(dateAvg)
@@ -414,7 +424,8 @@ d3.json("/api/hours/?count=10000", function(data){
     /* dc.bubbleChart('#yearly-bubble-chart', 'chartGroup') */
     //    todo figure out .colr/ key /value accessors
     sensorBubbleChart
-        .width(1200) // (optional) define chart width, :default = 200
+        //.width(360) // (optional) define chart width, :default = 200
+        .width($( "#bubble-chart-col" ).width())
         .height(300)  // (optional) define chart height, :default = 200
         .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
         .margins({top: 10, right: 50, bottom: 30, left: 40})

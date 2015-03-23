@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <title>SoundScore | See what you hear</title>
 
@@ -61,63 +62,51 @@
             <li>
                 <a href="#decibels">Decibel Info</a>
             </li>
-{#            <li>#}
-{#                <a href="#portfolio">Portfolio</a>#}
-{#            </li>#}
-{#            <li>#}
-{#                <a href="#contact">Contact</a>#}
-{#            </li>#}
-
         </ul>
-
     </nav>
 
-        <div class="text-vertical-center">
-
-                <h1>SoundScore</h1>
-                <h3><i>See What You Hear</i></h3>
-                <br>
-                <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
-
+{#    <section id="top">#}
+        <div class="container-fluid">
+    {#    <div class="container">#}
+            <div class="row">
+                <div id="tint">
+                    <header id="top" class="header">
+                        <div class="text-vertical-center col-sm-12 col-md-12 col-lg-12">
+                            <h1>SoundScore</h1>
+                            <h3><i>See What You Hear</i></h3>
+                            <br>
+                            <a href="#map" class="btn btn-dark btn-lg">Explore San Francisco</a>
+                        </div>
+                    </header>
+                </div>
+            <!-- Row -->
+            </div>
+        <!-- Container -->
         </div>
-
-    <!-- Header -->
-<div id="tint">
-    <header id="top" class="header">
-{#todo tint not working! get frontend help#}
-
-    </header>
-</div>
-
+{#    </section>#}
 
 
     <!-- Map -->
-
 {#    <section id="mapper">#}
-
-        <div id='map' class='map'></div><br>
-
-{#        <div class="container">#}
+{#        <div class="container-fluid">#}
 {#            <div class="row">#}
 {#                <div class="col-lg-12 text-center">#}
-{#                    // todo check this nav doesn't get affected by other nav styling#}
-{##}
-{##}
+                    <div id='map' class='map'></div><br>
 {#                </div>#}
 {#            </div>#}
 {#            <!-- /.row -->#}
 {#        </div>#}
-        <!-- /.container -->
+{#        <!-- /.container -->#}
 {#    </section>#}
 
    <!-- Charts -->
     <section id="charts" class="charts">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Listen Closely, Ya Hear?! Explore Your Area:</h2>
-                </div>
-            </div>
+        <div class="container-fluid">
+{#            <div class="row">#}
+{#                <div class="col-lg-12 text-center">#}
+{#                    <h2>Listen Closely, Ya Hear?! Explore Your Area:</h2>#}
+{#                </div>#}
+{#            </div>#}
 {#            <div class="row">#}
 
 {#              <div class='col-md-4' id="hod-chart">#}
@@ -134,10 +123,11 @@
 {#            </div>#}
 
               <div class='row'>
-                <div class='col-md-12' id="sensor-bubble-chart">
+                <div class='col-md-12 col-sm-12' id="bubble-chart-col">
                   <h4> <strong>Sound by Sensor</strong>
                     <a class="reset" href="javascript:sensorBubbleChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                   </h4>
+                    <div id="sensor-bubble-chart"></div>
                 </div>
               </div>
             <!-- /.row -->
@@ -149,23 +139,26 @@
 {#                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
 {#                </h6>#}
 {#              </div>#}
-              <div class='col-md-3 text-center' id="hour-ring-chart">
-                <h4> <strong>Sound By Hour of Day</strong>
-                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+
+              <div class='col-md-3 col-sm-12 text-center' id="dow-chart">
+                <h4> <strong>Sound by Day of Week</strong>
+                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                 </h4>
               </div>
 
-                <div class= 'col-md-6 text-center' id="date-chart">
+                <div class= 'col-md-6 col-sm-12 text-center' id="date-chart">
                   <h4> <strong>Sound by Day</strong>
                     <a class="reset" href="javascript:dateBarChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                   </h4>
                 </div>
 
-              <div class='col-md-3' id="dow-chart">
-                <h4> <strong>Sound by Day of Week</strong>
-                 <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
+              <div class='col-md-3 col-sm-12 text-center' id="hour-ring-chart">
+                <h4> <strong>Sound By Hour of Day</strong>
+                 <a class="reset" href="javascript:hourRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                 </h4>
               </div>
+
+
 
 
 {#              <div class='col-md-4' id="singlehour-ring-chart">#}
@@ -198,9 +191,9 @@
 
  <!-- Charts -->
     <section id="decibels" class="decibels">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12 text-center">
+                <div class="col-lg-12 col-sm-12 text-center">
 {#                    <h2>Decibels? What are we talking about here?</h2>#}
 {#                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">#}
                     <img src="../static/img/Decible-Infographic.png">
@@ -396,6 +389,7 @@
             </div>
         </div>
     </footer>
+{#</div>#}
 
     <!-- jQuery -->
     <script src="../static/js/jquery.js"></script>
