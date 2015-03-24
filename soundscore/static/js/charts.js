@@ -12,6 +12,7 @@ var hourPie = dc.pieChart("#hour-pie");
 //var hodChart = dc.barChart('#hod-chart');
 var sensorBubbleChart = dc.bubbleChart('#sensor-bubble-chart');
 var dateBarChart  = dc.barChart("#date-chart");
+var activeHours;
 
 console.log($(window).width());
 
@@ -35,7 +36,11 @@ d3.json("/api/hours/?count=10000", function(data){
 //            "sensor": 1
 //        },
 
-    var cf = crossfilter(api_data);
+    cf = crossfilter(api_data);
+
+    var totalHours = cf.groupAll().value();
+    d3.select("#total").text(totalHours);
+    d3.select("#active").text(totalHours);
 
     //custom reduce functions for avg attributes
     function reduceAddAvg(att) {
@@ -48,7 +53,7 @@ d3.json("/api/hours/?count=10000", function(data){
             else {
                 p.avg = 0;
             }
-
+            //totalHours = cf.groupAll().value();
             return p;
         };
     }
@@ -63,6 +68,7 @@ d3.json("/api/hours/?count=10000", function(data){
             else {
                 p.avg = 0;
             }
+            //totalHours = cf.groupAll().value();
             return p;
         };
     }
@@ -80,6 +86,7 @@ d3.json("/api/hours/?count=10000", function(data){
         p.std_total += v['sound_std'];
         if (p.count > 0) { p.std_avg = p.std_total / p.count;}
         else { p.std_avg = 0;}
+        //totalHours = cf.groupAll().value();
         return p;
     }
 
@@ -91,6 +98,7 @@ d3.json("/api/hours/?count=10000", function(data){
         p.std_total -= v['sound_std'];
         if (p.count > 0) { p.std_avg = p.std_total / p.count;}
         else { p.std_avg = 0;}
+        //totalHours = cf.groupAll().value();
         return p;
     }
 
@@ -124,6 +132,8 @@ d3.json("/api/hours/?count=10000", function(data){
     var dowDim  = cf.dimension(function(d) {return d.dow;});
     var hodDim  = cf.dimension(function(d) {return d.hod;});
     var dateDim  = cf.dimension(function(d) {return d.date;});
+
+    hour = hourDim.groupAll().value();
 
     var hourGroupDim = cf.dimension(function (d) {
         var hr = d.hod;
@@ -182,33 +192,57 @@ d3.json("/api/hours/?count=10000", function(data){
 
     //var sensorTotal = sensorDim.group().reduceSum(function(d) {return d.sound_avg;});
 
-    dowChart
-          .width($( "#dow-chart-col" ).width())
-          //.height($( "#dow-chart" ).height())
-          .height(300)
-          .margins({top: 10, left: 20, right: 10, bottom: 20})
-//              .group(dowDim.group())
-          .group(dowAvg)
-          .dimension(dowDim)
-          .label(function (d) {
-              return dayOfWeekNames[d.key];
-          })
+
+     dowChart
+           .width($( "#dow-chart-col" ).width())
+           .height(300)
+           .margins({top: 10, left: 20, right: 10, bottom: 20})
+           .group(dowAvg)
+           .dimension(dowDim)
+           .label(function (d) {
+               return dayOfWeekNames[d.key];
+             })
             .colors(colorbrewer.SdSc[5])
-            .colorDomain([74, 76])
+            .colorDomain([50, 100])
+            .colorAccessor(function(d){return d.value.avg;})
             .renderTitle(true)
             .title(function (p) {
                 return 'Average Noise: ' + numberFormat(p.value.avg) + ' dB';
             })
-            .labelOffsetX(2100)
-            .colorAccessor(function(d, i){return d.value.avg;})
-            //had to hack around to get xaxis scale to work:
-            //https://groups.google.com/forum/#!topic/dc-js-user-group/zg_MgogXs2Y
-            .x(d3.scale.linear().range([0,300]).domain([70,80]))
+           .elasticX(true)
+           .xAxis().ticks(4);
 
-          //.elasticX(true)
-          .xAxis().ticks(5);
+     dowChart.valueAccessor(function(p) {return p.value.avg; });
 
-    dowChart.valueAccessor(function(p) {return p.value.avg; });
+
+//
+//    dowChart
+//          .width($( "#dow-chart-col" ).width())
+//          //.height($( "#dow-chart" ).height())
+//          .height(300)
+//          .margins({top: 10, left: 20, right: 10, bottom: 20})
+////              .group(dowDim.group())
+//          .group(dowAvg)
+//          .dimension(dowDim)
+//          .label(function (d) {
+//              return dayOfWeekNames[d.key];
+//          })
+//            .colors(colorbrewer.SdSc[5])
+//            .colorDomain([74, 76])
+//            .renderTitle(true)
+//            .title(function (p) {
+//                return 'Average Noise: ' + numberFormat(p.value.avg) + ' dB';
+//            })
+//            .labelOffsetX(2100)
+//            .colorAccessor(function(d, i){return d.value.avg;})
+//            //had to hack around to get xaxis scale to work:
+//            //https://groups.google.com/forum/#!topic/dc-js-user-group/zg_MgogXs2Y
+//            .x(d3.scale.linear().range([0,300]).domain([70,80]))
+//
+//          //.elasticX(true)
+//          .xAxis().ticks(5);
+//
+//    dowChart.valueAccessor(function(p) {return p.value.avg; });
 
     //monthRingChart
     //    .width(300).height(300)
@@ -440,7 +474,7 @@ d3.json("/api/hours/?count=10000", function(data){
         })
         .maxBubbleRelativeSize(0.3)
         .x(d3.scale.linear().domain([70, 90]))
-        .y(d3.scale.linear().domain([40, 70]))
+        .y(d3.scale.linear().domain([45, 65]))
         .r(d3.scale.linear().domain([0, 4000]))
         //.elasticY(true)
         //.elasticX(true)
@@ -489,6 +523,7 @@ d3.json("/api/hours/?count=10000", function(data){
         dowChart.width($( "#dow-chart-col" ).width());
         hourPie.width($( "#hour-pie-col" ).width());
         dc.renderAll();
+
     });
 
 });

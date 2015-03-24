@@ -178,6 +178,8 @@ dc.renderAll = function (group) {
     if (dc._renderlet !== null) {
         dc._renderlet(group);
     }
+    //todo check this effect on performance
+    activeHours = cf.groupAll().value();
 };
 
 /**
@@ -196,6 +198,9 @@ dc.redrawAll = function (group) {
     if (dc._renderlet !== null) {
         dc._renderlet(group);
     }
+    //todo check this effect on performance
+    activeHours = cf.groupAll().value();
+    d3.select("#active").text(activeHours);
 };
 
 /**
