@@ -72,12 +72,18 @@
 
             sensorLayer.setGeoJSON(gjson);
 
+            // tooltips on hover
             //sensorLayer.on('mouseover', function(e) {
             //    e.layer.openPopup();
             //});
             //sensorLayer.on('mouseout', function(e) {
             //    e.layer.closePopup();
             //});
+
+            // disables tooltip
+            sensorLayer.on('click', function(e) {
+                e.layer.closePopup();
+            });
 
 //                circle markers
 //            var sensorLayer = L.geoJson(gjson, {

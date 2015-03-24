@@ -340,7 +340,12 @@ footer {
     html { font-size: 200%; }
 }
 
-#decibels > .container-fluid > .row > div {
+#decibels {
     /*padding-left: 0;*/
     /*padding-right: 0;*/
+    color: white;
+}
+
+#decibels .text-muted {
+  color: white;
 }

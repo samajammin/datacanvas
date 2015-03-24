@@ -448,8 +448,8 @@ d3.json("/api/hours/?count=10000", function(data){
         .xAxisPadding(500)
         .renderHorizontalGridLines(true) // (optional) render horizontal grid lines, :default=false
         .renderVerticalGridLines(true) // (optional) render vertical grid lines, :default=false
-        .xAxisLabel('Average Noise Level') // (optional) render an axis label below the x axis
-        .yAxisLabel('Noise SD') // (optional) render a vertical axis lable left of the y axis
+        .xAxisLabel('Decibels') // (optional) render an axis label below the x axis
+        .yAxisLabel('Standard Deviation') // (optional) render a vertical axis lable left of the y axis
         .renderLabel(true) // (optional) whether chart should render labels, :default = true
         .label(function (p) {
             return p.key;

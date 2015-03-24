@@ -120,10 +120,10 @@
 {#            </div>#}
 
               <div class='row'>
-                <div class='col-md-12 col-xs-12' id="bubble-chart-col">
+                <div class='col-md-12 col-xs-12 text-center' id="bubble-chart-col">
 
                     <div id="sensor-bubble-chart">
-                      <h4> <strong>Sound by Sensor</strong>
+                      <h4> <strong>Average Sound Level by Sensor</strong>
                         <a class="reset" href="javascript:sensorBubbleChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
                       </h4>
                     </div>
@@ -132,15 +132,9 @@
             <!-- /.row -->
 
             <div class="row">
-
-{#              <div class='col-md-4' id="chart-ring-month">#}
-{#                <h6>Month Pie Chart#}
-{#                 <a class="reset" href="javascript:monthRingChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>#}
-{#                </h6>#}
-{#              </div>#}
-
-              <div class='col-md-3 col-xs-12 text-center' id="dow-chart-col">
 {#                  todo center charts#}
+              <div class='col-md-3 col-xs-12 text-center' id="dow-chart-col">
+
                   <div id="dow-chart">
                      <h4> <strong>Sound by Day of Week</strong>
                      <a class="reset" href="javascript:dowChart.filterAll(); dc.redrawAll();" style="display: none;">reset</a>
@@ -204,6 +198,29 @@
 {#                    <h2>Decibels? What are we talking about here?</h2>#}
 {#                    <img src="http://www.acting-man.com/blog/media/2015/02/decibel-scale.jpg" height="100%" width="100%">#}
                     <img src="../static/img/Decible-Infographic.png">
+
+                    <h4><strong>SoundScore</strong>
+                    </h4>
+                    <p><i>See What You Hear</i></p>
+{#                    <ul class="list-unstyled">#}
+{#                        <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>#}
+{#                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:name@example.com">name@example.com</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                    <br>#}
+{#                    <ul class="list-inline">#}
+{#                        <li>#}
+{#                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>#}
+{#                        </li>#}
+{#                    </ul>#}
+                    <hr class="small">
+                    <p class="text-muted">Built with <i class="fa fa-heart"></i> by the SoundScore team</p>
                 </div>
 {#                <div class="col-lg-6 text-center">#}
 {#                    <h2>Decibels? What are we talking about here?</h2>#}
@@ -366,13 +383,13 @@
 {#    </section>#}
 
     <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>SoundScore</strong>
-                    </h4>
-                    <p>See What You Hear</p>
+{#    <footer id="contact">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-lg-10 col-lg-offset-1 text-center">#}
+{#                    <h4><strong>SoundScore</strong>#}
+{#                    </h4>#}
+{#                    <p>See What You Hear</p>#}
 {#                    <ul class="list-unstyled">#}
 {#                        <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>#}
 {#                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:name@example.com">name@example.com</a>#}
@@ -390,12 +407,12 @@
 {#                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>#}
 {#                        </li>#}
 {#                    </ul>#}
-                    <hr class="small">
-                    <p class="text-muted">Built with <i class="fa fa-heart"></i> by the SoundScore team</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+{#                    <hr class="small">#}
+{#                    <p class="text-muted">Built with <i class="fa fa-heart"></i> by the SoundScore team</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </footer>#}
 {#</div>#}
 
     <!-- jQuery -->
