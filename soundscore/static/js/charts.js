@@ -469,28 +469,27 @@ d3.json("/api/hours/?count=10000", function(data){
         });
 
 
-
-
     dc.renderAll();
 
-    // todo filter on map clicks
+    // filter charts on sensor marker clicks
     $('.leaflet-marker-icon').on('click', function(e){
         console.log(e);
         console.log(parseInt(e.target.attributes.title.nodeValue));
-        var sensorClicked = parseInt(e.target.attributes.title.nodeValue)
+        var sensorClicked = parseInt(e.target.attributes.title.nodeValue);
         sensorBubbleChart.filterAll();
         sensorBubbleChart.filter(sensorClicked);
         dc.redrawAll();
-        //var minDate = tripsByDateDimension.top(5)[4].startDate;
-        //var maxDate = tripsByDateDimension.top(5)[0].startDate;
-        //console.log(tripVolume.filters());
-        //
-        //
-        //tripVolume.filter([minDate, maxDate]);
-        //tripVolume.x(d3.time.scale().domain([minDate,maxDate]));
-        //
-        //console.log(tripVolume.filters());
 
+    });
+    // resize charts on window resize
+    $(window).on('resize', function(){
+        console.log("resize");
+        sensorBubbleChart.width($( "#bubble-chart-col" ).width());
+        dateBarChart.width($( "#date-chart-col" ).width());
+        dowChart.width($( "#dow-chart-col" ).width());
+        hourPie.width($( "#hour-pie-col" ).width());
+        dc.renderAll();
     });
 
 });
+
