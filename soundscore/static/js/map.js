@@ -5,6 +5,8 @@
         L.mapbox.accessToken = 'pk.eyJ1Ijoic2FtYnJpY2hhcmRzIiwiYSI6Ilk0VTVlaTQifQ.HvqYSkhL-Rwj7sp-hkS4bg';
 
 
+//
+//        var map = L.mapbox.map('map', 'natedies.e5f2eaaa', {
         var map = L.mapbox.map('map', 'sambrichards.lcknl6d4', {
             scrollWheelZoom: false,
             legendControl: {
