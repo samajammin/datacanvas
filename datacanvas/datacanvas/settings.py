@@ -17,16 +17,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ['SECRET_KEY']
-# TODO secure key
-SECRET_KEY = '#_s3=4ne9kup8-ftan-f0bxu!#*mh&u@1a%m(k$hu-uxcdo6-s'
+if 'SECRET_KEY' in os.environ:
+    SECRET_KEY = os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+ADMINS = (('Sam', 'sbrichards@gmail.com'),)
 
 
 # Application definition
@@ -62,12 +64,17 @@ WSGI_APPLICATION = 'datacanvas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -80,7 +87,6 @@ USE_I18N = True
 
 USE_L10N = True
 
-# todo look into what we want here... what is format of different cities?
 # https://docs.djangoproject.com/en/dev/topics/i18n/timezones/#code
 # https://docs.djangoproject.com/en/1.7/topics/i18n/timezones/
 USE_TZ = False
