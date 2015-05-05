@@ -2,6 +2,10 @@ import os
 
 __author__ = 'samrichards'
 
+SECRET_KEY = '#_s3=4ne9kup8-ftan-f0bxu!#*mh&u@1a%m(k$hu-uxcdo6-s'
+
+DEBUG = True
+
 
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {

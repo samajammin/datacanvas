@@ -1,16 +1,20 @@
-
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-.DS_Store
-
 # Pycharm
 .idea/
 datacanvas/.idea/
-datacanvas/.idea/*
-datacanvas/.idea/workspace.xml
 
 # Static directory for deployment
 www/
+
+# DS Store
+*.DS_Store
+
+# all .pyc files
+*.pyc
+
+# Dev settings
+datacanvas/local_settings.py
