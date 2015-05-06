@@ -316,6 +316,7 @@ footer {
     /*html { font-size: 70%; }*/
     /*.text-vertical-center h1 { font-size: 5em; }*/
     img {width: 100%;}
+    .mainlogo {width: 50%;}
 }
 
 /*@media (min-width: 500px) {*/
