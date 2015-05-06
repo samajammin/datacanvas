@@ -196,16 +196,9 @@ hr.small {
 
 /* Charts */
 
-/*todo i don't think % is the best way to manage height... producing some overlap*/
 .charts {
     padding: 50px 0;
     /*height: 100%;*/
-}
-
-/* Decibels */
-
-.decibels {
-    padding: 50px 0;
 }
 
 /* Services */
@@ -266,9 +259,7 @@ footer {
     padding: 100px 0;
 }
 
-#decibels {
-    background-color: #424242;
-}
+
 
 /*path {*/
     /*fill: red;*/
@@ -340,6 +331,16 @@ footer {
     html { font-size: 200%; }
 }
 
+/* Decibels */
+
+.decibels {
+    padding: 50px 0;
+}
+
+#decibels {
+    background-color: #424242;
+}
+
 #decibels {
     /*padding-left: 0;*/
     /*padding-right: 0;*/
@@ -349,3 +350,32 @@ footer {
 #decibels .text-muted {
   color: white;
 }
+
+/* bio */
+
+.bio {
+    padding: 50px 0;
+}
+
+#bio {
+    background-color: #424242;
+    /*background-color: #1E1E1E;*/
+}
+
+#bio {
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+    color: white;
+}
+
+#bio .text-muted {
+    color: white;
+}
+
+p {
+    font-size: 18px;
+}
+
+.center-x{ text-align:center;}
+
+.center-y{vertical-align:middle;}
