@@ -1,3 +1,5 @@
+*This project is no longer live or maintained*
+
 # Soundscore: See What You Hear
 
 ## The Project
